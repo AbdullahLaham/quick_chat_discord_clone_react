@@ -9,9 +9,9 @@ import ServerHeader from './ServerHeader';
 import { safeServer } from '@/types';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Hash, Mic, ShieldAlert, ShieldCheck, Video } from 'lucide-react';
-import ServerSearch from '@/components/server/ServerSearch';
-import { Separator } from '@/components/ui/separator';
-import ServerSection from '@/components/server/ServerSection';
+import ServerSearch from './ServerSearch';
+import { Separator } from '../ui/separator';
+import ServerSection from './ServerSection';
 import ServerChannel from './ServerChannel';
 import ServerMember from './ServerMember';
 

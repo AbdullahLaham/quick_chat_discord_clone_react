@@ -5,18 +5,16 @@ import {
     Popover,
     PopoverContent,
     PopoverTrigger,
-  } from "@/components/ui/popover"
+  } from "./ui/popover"
   import {Picker} from 'emoji-mart';
-  import data from '@emoji-mart/data';
 import { Smile } from 'lucide-react'
-  import { useTheme } from 'next-themes';
 
-interface EmojiPickerProps {
-    onChange: (value: string) => void,
-}
+// interface EmojiPickerProps {
+//     onChange: (value: string) => void,
+// }
 
-const EmojiPicker = ({ onChange }: EmojiPickerProps) => {
-    const {resolvedTheme} = useTheme();
+const EmojiPicker = ({ onChange }) => {
+    // const {resolvedTheme} = useTheme();
   return (
     <Popover>
         <PopoverTrigger>

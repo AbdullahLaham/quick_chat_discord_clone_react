@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 import { safeServer } from '@/types'
 import { Channel, ChannelType, MemberRole, Server, Member, Profile, } from '@prisma/client'
 import { Edit, Hash, Lock, Mic, Trash, Video } from 'lucide-react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams, useNavigate } from 'react-router-dom'
 import React from 'react'
 import ActionTooltip from '../ActionTooltip'
 import { ShieldAlert, ShieldCheck } from 'lucide-react'
@@ -33,10 +33,10 @@ const ServerMember = ({member, server, role}) => {
     const params = useParams();
     const Icon = iconMap[member.role];
     const {onOpen} = useModal();
-    const router = useRouter();
+    const navigate = useNavigate();
 
     const onClick = () => {
-      router.push(`/servers/${server?.id}/conversations/${member?.id}`)
+      navigate(`/servers/${server?.id}/conversations/${member?.id}`)
     }
 
     // const onAction = (e: React.MouseEvent, action: ModalType) => {

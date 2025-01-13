@@ -9,22 +9,20 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-  } from "@/components/ui/form"
+  } from "../ui/form"
   import qs from 'query-string';
   import {useForm} from 'react-hook-form';
   import { zodResolver } from "@hookform/resolvers/zod"
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { Input } from '../ui/input';
+import { Button } from '../ui/button';
 
-import { Member, MemberRole, Profile } from '@prisma/client'
 import React, { useEffect, useState } from 'react'
 import UserAvatar from '../UserAvatar'
 import { Delete, Edit, FileIcon, ShieldAlert, ShieldCheck, Trash } from 'lucide-react'
 import ActionTooltip from '../ActionTooltip'
-import Image from 'next/image'
 import { cn } from '@/lib/utils'
-import toast from 'react-hot-toast';
-import { useParams, useRouter } from 'next/navigation';
+import toast from 'sonner';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useModal } from '@/hooks/useModalStore';
 
 
@@ -50,6 +48,7 @@ const ChatItem = ({ id, content, member, timestamp, fileUrl, deleted, currentMem
         "ADMIN": <ShieldAlert className="h-4 w-4 text-rose-500 " />,
 
     }
+    const navigate = useNavigate();
     // delete messagee modal onOpen function
 
     const {onOpen} = useModal();
@@ -77,7 +76,7 @@ const ChatItem = ({ id, content, member, timestamp, fileUrl, deleted, currentMem
             toast.success("message updated successfully")
             form.reset();
             setIsEditing(false)
-            router.refresh();
+           navigate(0);
 
         } catch (error) {
             toast.error("something went wrong")
@@ -87,7 +86,7 @@ const ChatItem = ({ id, content, member, timestamp, fileUrl, deleted, currentMem
         if (member?.id == currentMember?.id) {
             return;
         }
-        router.push(`/servers/${params?.serverId}/conversations/${member?.id}`)
+        navigate(`/servers/${params?.serverId}/conversations/${member?.id}`)
     }
     useEffect(() => {
         const handleKeyDown = (event) => {
@@ -106,7 +105,6 @@ const ChatItem = ({ id, content, member, timestamp, fileUrl, deleted, currentMem
 
     // params
     const params = useParams();
-    const router = useRouter();
     const fileType = fileUrl?.split('.').pop();
     const isAdmin = currentMember.role === MemberRole.ADMIN;
     const isModerator = currentMember.role === MemberRole.MODERATOR;
@@ -146,7 +144,7 @@ const ChatItem = ({ id, content, member, timestamp, fileUrl, deleted, currentMem
                 </div>
                 {isImage && (
                     <a href={fileUrl} target='_blank' rel='noopener noreferrer' className='relative aspect-square rounded-md mt-2 overflow-hidden border flex items-center bg-secondary h-48 w-48'>
-                        <Image src={fileUrl} alt={content || ""} fill className='object-cover' />
+                        {/* <Image src={fileUrl} alt={content || ""} fill className='object-cover' /> */}
                     </a>
                 )}
                 {isPDF && (

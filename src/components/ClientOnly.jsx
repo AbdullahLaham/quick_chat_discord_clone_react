@@ -1,10 +1,10 @@
 "use client"
 
 import React, { useEffect, useState } from 'react'
-interface ClientOnlyProps {
-    children: React.ReactNode,
-}
-const ClientOnly = ({children}: ClientOnlyProps) => {
+// interface ClientOnlyProps {
+//     children: React.ReactNode,
+// }
+const ClientOnly = ({children}) => {
 
     const [isMounted, setIsMounted] = useState(false);
 

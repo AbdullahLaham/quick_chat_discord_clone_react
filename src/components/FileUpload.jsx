@@ -3,15 +3,14 @@ import "@uploadthing/react/styles.css";
 import { UploadDropzone } from "@/lib/uploadthing"
 import React from 'react'
 import { FileIcon, X } from "lucide-react";
-import Image from "next/image";
 
-interface FileUploadProps {
-    onChange: (url?: string) => void,
-    value: string,
-    endpoint: "messageFile" | "serverImage",
-}
+// interface FileUploadProps {
+//     onChange: (url?: string) => void,
+//     value: string,
+//     endpoint: "messageFile" | "serverImage",
+// }
 
-const FileUpload: React.FC<FileUploadProps> = ({ onChange, value, endpoint }) => {
+const FileUpload = ({ onChange, value, endpoint }) => {
     const fileType = value.split(".").pop();
     if (value && fileType !== 'pdf') {
         return (
@@ -40,7 +39,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onChange, value, endpoint }) =>
           // Do something with the response
           onChange(res?.[0]?.url);
         }}
-        onUploadError={(error: Error) => {
+        onUploadError={(error) => {
           // Do something with the error.
           console.log(`ERROR! ${error.message}`);
         }}

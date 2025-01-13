@@ -10,17 +10,17 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-  } from "@/components/ui/form"
+  } from "../ui/form"
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { Input } from '../ui/input'
 import { Plus, Smile } from 'lucide-react'
 import qs from 'query-string'
 import axios from 'axios'
-import toast from 'react-hot-toast'
-import { useModal } from '@/hooks/useModalStore'
+import toast from 'sonner'
+import { useModal } from '../../hooks/useModalStore'
 import EmojiPicker from '../EmojiPicker'
-import { useRouter } from 'next/navigation'
+import { useNavigate,  } from 'react-router-dom'
 // interface ChatInputProps {
 //     apiUrl: string,
 //     query: Record<string, any>,
@@ -33,7 +33,6 @@ const formSchema = z.object({
 const ChatInput = ({apiUrl, query, name, type}) => {
 
     const {onOpen} = useModal();
-    const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {

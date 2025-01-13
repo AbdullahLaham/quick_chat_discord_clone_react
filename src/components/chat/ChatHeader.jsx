@@ -1,8 +1,6 @@
 import { Hash, Menu } from 'lucide-react'
 import React from 'react'
 import MobileToggle from '../mobile-toggle'
-import { Profile, Server } from '@prisma/client'
-import { safeServer } from '@/types'
 import UserAvatar from '../UserAvatar'
 import SocketIndicator from '../SocketIndicator'
 import ChatVideoButton from './ChatVideoButton'

@@ -2,9 +2,9 @@
 
 import React from 'react'
 
-import { useSocket } from '@/components/providers/socket-provider'
+import { useSocket } from './providers/socket-provider'
 
-import { Badge } from '@/components/ui/badge';
+import { Badge } from './ui/badge';
 
 const SocketIndicator = () => {
 
