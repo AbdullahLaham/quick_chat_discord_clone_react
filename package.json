@@ -5,6 +5,7 @@
   "dependencies": {
     "@radix-ui/react-separator": "^1.1.1",
     "@reduxjs/toolkit": "^2.5.0",
+    "@tanstack/react-query": "^5.64.0",
     "axios": "^1.7.9",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -18,6 +19,7 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.1.1",
     "react-scripts": "5.0.1",
+    "socket.io-client": "^4.8.1",
     "sonner": "^1.7.1",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
