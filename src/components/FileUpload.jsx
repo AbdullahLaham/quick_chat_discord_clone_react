@@ -1,6 +1,6 @@
 import "@uploadthing/react/styles.css";
  
-import { UploadDropzone } from "@/lib/uploadthing"
+import { UploadDropzone } from "../lib/uploadthing"
 import React from 'react'
 import { FileIcon, X } from "lucide-react";
 
@@ -16,7 +16,7 @@ const FileUpload = ({ onChange, value, endpoint }) => {
         return (
         <div className="flex items-center justify-center w-full">
             <div className="h-[10rem] w-[10rem] relative ">
-                <Image fill src={value} alt={'Upload'} className="rounded-full object-cover" /> 
+                <img className="w-full h-full rounded-full object-cover"  src={value} alt={'Upload'} />
                 <button type="button" onClick={() => onChange("")} className="bg-rose-500 text-white p-1 rounded-full flex items-center justify-center absolute top-0 right-0 shadow-sm"><X className="h-4 w-4" /></button>
             </div>
         </div>

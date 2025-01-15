@@ -1,8 +1,7 @@
 import qs from "query-string";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
-import { useSocket } from "@/components/providers/socket-provider";
-import { Member, Message, Profile } from "@prisma/client";
+import { useSocket } from "../components/providers/socket-provider";
 
 
 export const useChatQuery = ({ queryKey, apiUrl, paramKey, paramValue }) => {

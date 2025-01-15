@@ -1,13 +1,9 @@
 'use client'
 
-import { currentProfile } from '@/lib/currentProfile'
-import { db } from '@/lib/db';
-import { Channel, ChannelType, MemberRole, Profile } from '@prisma/client';
-import { redirect } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 import React, { useEffect } from 'react'
 import ServerHeader from './ServerHeader';
-import { safeServer } from '@/types';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { ScrollArea } from '../ui/scroll-area';
 import { Hash, Mic, ShieldAlert, ShieldCheck, Video } from 'lucide-react';
 import ServerSearch from './ServerSearch';
 import { Separator } from '../ui/separator';
@@ -22,27 +18,29 @@ import ServerMember from './ServerMember';
 // }
 
 const iconMap = {
-  [ChannelType.TEXT]: <Hash className='mr-2 h-4 w-4' />,
-  [ChannelType.AUDIO]: <Mic className='mr-2 h-4 w-4' />,
-  [ChannelType.VIDEO]: <Video className='mr-2 h-4 w-4' />,
+  TEXT: <Hash className='mr-2 h-4 w-4' />,
+  AUDIO: <Mic className='mr-2 h-4 w-4' />,
+  VIDEO: <Video className='mr-2 h-4 w-4' />,
 
 }
 const roleIconMap = {
-  [MemberRole.GUEST]: null,
-  [MemberRole.MODERATOR]: <ShieldCheck className='h-4 w-4 mr-2 text-indigo-500' />,
-  [MemberRole.ADMIN]: <ShieldAlert className='h-4 w-4 mr-2 text-rose-500' />,
+  GUEST: null,
+  MODERATOR: <ShieldCheck className='h-4 w-4 mr-2 text-indigo-500' />,
+  ADMIN: <ShieldAlert className='h-4 w-4 mr-2 text-rose-500' />,
 
 }
 
 const ServerSidebar = ({serverId, server, profile}) => {
+  // navigate
+  let navigate = useNavigate();
     
-    const textChannels = server?.channels.filter((channel) => channel.type === ChannelType.TEXT);
-    const audioChannels = server?.channels.filter((channel) => channel.type === ChannelType.AUDIO);
-    const videoChannels = server?.channels.filter((channel) => channel.type === ChannelType.VIDEO);
+    const textChannels = server?.channels.filter((channel) => channel.type === 'TEXT');
+    const audioChannels = server?.channels.filter((channel) => channel.type === 'AUDIO');
+    const videoChannels = server?.channels.filter((channel) => channel.type === 'VIDEO');
 
     const members = server?.members?.filter((member) => member?.profileId !== profile.id);
 
-    if (!server) return redirect('/');
+    if (!server) return navigate('/');
 
     const role = server.members.find((member) => member.profileId === profile.id)?.role;
 
@@ -94,7 +92,7 @@ const ServerSidebar = ({serverId, server, profile}) => {
           <Separator className='bg-zinc-200 dark:bg-zinc-700 rounded-md my-2 ' />
           {!!textChannels?.length && (
             <div className='mb-2'>
-              <ServerSection sectionType='channels' channelType={ChannelType.TEXT} role={role} server={server} label='Text Channels'  />
+              <ServerSection sectionType='channels' channelType={'TEXT'} role={role} server={server} label='Text Channels'  />
               <div className='space-y-[2px] '>
                 {
                   textChannels?.map((channel) => {
@@ -108,7 +106,7 @@ const ServerSidebar = ({serverId, server, profile}) => {
           )}
           {!!audioChannels?.length && (
             <div className='mb-2'>
-              <ServerSection sectionType='channels' channelType={ChannelType.AUDIO} role={role} server={server} label='Voice Channels'  />
+              <ServerSection sectionType='channels' channelType={'AUDIO'} role={role} server={server} label='Voice Channels'  />
               <div className='space-y-[2px] '>
                 {
                   audioChannels?.map((channel) => {
@@ -123,7 +121,7 @@ const ServerSidebar = ({serverId, server, profile}) => {
           )}
           {!!videoChannels?.length && (
             <div className='mb-2'>
-              <ServerSection sectionType='channels' channelType={ChannelType.VIDEO} role={role} server={server} label='Video Channels'  />
+              <ServerSection sectionType='channels' channelType={'VIDEO'} role={role} server={server} label='Video Channels'  />
               <div className='space-y-[2px] '>
                 {
                 videoChannels?.map((channel) => {

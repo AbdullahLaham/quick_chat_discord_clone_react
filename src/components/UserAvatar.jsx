@@ -1,6 +1,6 @@
 import React from 'react'
 import { Avatar, AvatarImage } from './ui/avatar'
-import { cn } from '@/lib/utils'
+import { cn } from '../lib/utils'
 
 const UserAvatar = ({src, className}) => {
   return (

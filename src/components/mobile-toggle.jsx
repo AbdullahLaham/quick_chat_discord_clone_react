@@ -7,13 +7,11 @@ import {
     SheetHeader,
     SheetTitle,
     SheetTrigger,
-  } from "@/components/ui/sheet"
+  } from "./ui/sheet"
 import { Button } from './ui/button'
-import NavigationSidebar from '@/components/navigation/NavigationSidebar'
-import { Profile, Server } from '@prisma/client'
+import NavigationSidebar from './navigation/NavigationSidebar'
 import ServerSidebar from './server/ServerSidebar'
-import { safeServer } from '@/types'
-
+// 
 // interface MobileToggleProps {
 //     servers: Server[],
 //     profile: Profile,

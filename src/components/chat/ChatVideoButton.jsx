@@ -2,24 +2,24 @@
 
 import React from 'react'
 import qs from 'query-string';
-import { usePathname, useRouter, useParams, useSearchParams } from 'next/navigation';
+import {  useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { Video, VideoOff } from 'lucide-react';
-import ActionTooltip from '@/components/ActionTooltip';
+import ActionTooltip from '../ActionTooltip';
 
 const ChatVideoButton = () => {
-    const pathname = usePathname();
+    // const pathname = usePathname();
     const searchParams = useSearchParams();
-    const router = useRouter();
+    const navigate = useNavigate();
     
     const onClick = () => {
 
         let url = qs.stringifyUrl({
-            url: pathname || "",
+            // url: pathname || "",
             query: {
                 video: isVideo ? undefined : true
             }
         }, { skipNull: true });
-        router.push(url);
+        navigate(url);
 
     }
 

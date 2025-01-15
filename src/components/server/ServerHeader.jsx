@@ -1,21 +1,18 @@
 'use client'
 
-import { safeServer } from '@/types'
-import { MemberRole } from '@prisma/client'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { Server } from 'http'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu'
 import { ChevronDown, LogOut, PlusCircle, Settings, Trash, Users } from 'lucide-react'
 import React from 'react'
 import { DropdownMenuSeparator } from '../ui/dropdown-menu'
-import { useModal } from '@/hooks/useModalStore'
+import { useModal } from '../../hooks/useModalStore'
 // interface ServerHeaderProps {
 //     server: safeServer,
 //     role?: string
 // }
 const ServerHeader = ({server, role}) => {
     const {onOpen} = useModal();
-    const isAdmin = role == MemberRole.ADMIN;
-    const isModerator = isAdmin || role == MemberRole.MODERATOR;
+    const isAdmin = role == 'ADMIN';
+    const isModerator = isAdmin || role == 'MODERATOR';
 
   return (
     <DropdownMenu>

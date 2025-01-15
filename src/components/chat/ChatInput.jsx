@@ -1,4 +1,3 @@
-"use client"
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import React from 'react'
@@ -17,7 +16,7 @@ import { Input } from '../ui/input'
 import { Plus, Smile } from 'lucide-react'
 import qs from 'query-string'
 import axios from 'axios'
-import toast from 'sonner'
+import {toast} from 'sonner'
 import { useModal } from '../../hooks/useModalStore'
 import EmojiPicker from '../EmojiPicker'
 import { useNavigate,  } from 'react-router-dom'
@@ -33,7 +32,7 @@ const formSchema = z.object({
 const ChatInput = ({apiUrl, query, name, type}) => {
 
     const {onOpen} = useModal();
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
         content: '',

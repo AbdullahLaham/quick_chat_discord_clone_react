@@ -1,13 +1,12 @@
 'use client'
 
-import { cn } from '@/lib/utils'
-import { safeServer } from '@/types'
-import { Channel, ChannelType, MemberRole, Server } from '@prisma/client'
+import { cn } from '../../lib/utils'
+// import { Channel, ChannelType, MemberRole, Server } from '@prisma/client'
 import { Edit, Hash, Lock, Mic, Trash, Video } from 'lucide-react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams, useNavigate } from 'react-router-dom'
 import React from 'react'
 import ActionTooltip from '../ActionTooltip'
-import { ModalType, useModal } from '@/hooks/useModalStore'
+import { ModalType, useModal } from '../../hooks/useModalStore'
 
 // interface ServerChannelProps {
 //     channel: Channel,
@@ -15,19 +14,19 @@ import { ModalType, useModal } from '@/hooks/useModalStore'
 //     role?: MemberRole
 // }
 const iconMap = {
-    [ChannelType.TEXT]: Hash,
-    [ChannelType.AUDIO]: Mic,
-    [ChannelType.VIDEO]: Video,
+    TEXT: Hash,
+    AUDIO: Mic,
+    VIDEO: Video,
   
   }
 const ServerChannel = ({channel, server, role}) => {
     const params = useParams();
-    const router = useRouter();
+    const navigate = useNavigate();
     const Icon = iconMap[channel.type];
     const {onOpen} = useModal();
 
     const onClick = () => {
-      router.push(`/servers/${server?.id}/channels/${channel?.id}`)
+      navigate(`/servers/${server?.id}/channels/${channel?.id}`)
     }
     const onAction = (e, action) => {
       e.stopPropagation();
@@ -41,7 +40,7 @@ const ServerChannel = ({channel, server, role}) => {
         "line-clamp-1 font-semibold text-sm text-zinc-500 group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300 transition",
         params?.channelId === channel.id && "text-primary dark:text-zinc-200 dark:group-hover:text-white"
       )}>{channel?.name}</p>
-      {channel?.name !== "general" && role !== MemberRole.GUEST && (
+      {channel?.name !== "general" && role !== 'GUEST' && (
         <div className='ml-auto flex items-center gap-x-2'>
           <ActionTooltip label='Edit'>
             <Edit onClick={(e) => onAction(e, 'editChannel')} className='hidden group-hover:block w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-400' />

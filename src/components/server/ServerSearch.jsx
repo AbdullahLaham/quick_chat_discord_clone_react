@@ -1,10 +1,8 @@
-'use client'
-
 
 import { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut,
-} from "@/components/ui/command"
+} from "../ui/command"
 import { Search } from 'lucide-react';
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from 'react'
 // interface ServerSearchProps {
 //     data: {
@@ -19,6 +17,10 @@ import React, { useEffect, useState } from 'react'
 // }
 
 const ServerSearch = ({data}) => {
+  const navigate = useNavigate();
+  const params = useParams();
+
+  
   const [open, setOpen] = useState(false);
   useEffect(() => {
     const down = (e) => {
@@ -35,16 +37,14 @@ const ServerSearch = ({data}) => {
   const onClick = ({id, type}) => {
     setOpen(false);
     if (type == "member") {
-      return router.push(`/servers/${params?.serverId}/conversations/${id}`);
+      return navigate(`/servers/${params?.serverId}/conversations/${id}`);
 
     }
     if (type == "channel") {
-      return router.push(`/servers/${params?.serverId}/channels/${id}`);
+      return navigate(`/servers/${params?.serverId}/channels/${id}`);
     }
   }
 
-  const router = useRouter();
-  const params = useParams();
 
 
   return (

@@ -20,10 +20,10 @@ import React, { useEffect, useState } from 'react'
 import UserAvatar from '../UserAvatar'
 import { Delete, Edit, FileIcon, ShieldAlert, ShieldCheck, Trash } from 'lucide-react'
 import ActionTooltip from '../ActionTooltip'
-import { cn } from '@/lib/utils'
-import toast from 'sonner';
+import { cn } from '../../lib/utils'
+import {toast} from 'sonner';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useModal } from '@/hooks/useModalStore';
+import { useModal } from '../../hooks/useModalStore';
 
 
 // interface ChatItemProps {
@@ -59,7 +59,7 @@ const ChatItem = ({ id, content, member, timestamp, fileUrl, deleted, currentMem
         }),
     });
 
-    const form = useForm<z.infer<typeof formSchema>>({
+    const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             content: content,
@@ -106,8 +106,8 @@ const ChatItem = ({ id, content, member, timestamp, fileUrl, deleted, currentMem
     // params
     const params = useParams();
     const fileType = fileUrl?.split('.').pop();
-    const isAdmin = currentMember.role === MemberRole.ADMIN;
-    const isModerator = currentMember.role === MemberRole.MODERATOR;
+    const isAdmin = currentMember.role === 'ADMIN';
+    const isModerator = currentMember.role === 'MODERATOR';
     const isOwner = currentMember.id === member.id;
     const canDeleteMessage = !deleted && (isAdmin || isModerator || isOwner);
     const canEditMessage = !deleted && isOwner && !fileUrl;

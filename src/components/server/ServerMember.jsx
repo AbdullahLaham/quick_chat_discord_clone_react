@@ -1,14 +1,12 @@
 'use client'
 
-import { cn } from '@/lib/utils'
-import { safeServer } from '@/types'
-import { Channel, ChannelType, MemberRole, Server, Member, Profile, } from '@prisma/client'
+import { cn } from '../../lib/utils'
 import { Edit, Hash, Lock, Mic, Trash, Video } from 'lucide-react'
 import { useParams, useNavigate } from 'react-router-dom'
 import React from 'react'
 import ActionTooltip from '../ActionTooltip'
 import { ShieldAlert, ShieldCheck } from 'lucide-react'
-import { ModalType, useModal } from '@/hooks/useModalStore'
+import { ModalType, useModal } from '../../hooks/useModalStore'
 import UserAvatar from '../UserAvatar'
 
 // type MEMBER = Member & {
@@ -22,9 +20,9 @@ import UserAvatar from '../UserAvatar'
 // }
 
 const iconMap = {
-    [MemberRole.ADMIN]: <ShieldAlert className='flex-shrink-0 h-5 w-5 text-rose-500' />,
-    [MemberRole.MODERATOR]: <ShieldCheck className='flex-shrink-0 h-5 w-5 text-indigo-500' />,
-    [MemberRole.GUEST]: null,
+    ADMIN: <ShieldAlert className='flex-shrink-0 h-5 w-5 text-rose-500' />,
+    MODERATOR: <ShieldCheck className='flex-shrink-0 h-5 w-5 text-indigo-500' />,
+    GUEST: null,
   
   }
   

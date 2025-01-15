@@ -1,6 +1,4 @@
-// import MediaRoom from '@/components/MediaRoom';
 
-// import { currentProfile } from '@/lib/currentProfile'
 import React from 'react'
 import ChatInput from '../components/chat/ChatInput';
 import ChatHeader from '../components/chat/ChatHeader';
@@ -18,7 +16,7 @@ const ChannelType = {
     AUDIO: 'AUDIO',
     VIDEO: 'VIDEO',
 }
-const ChannelPage = async ({params}) => {
+const ChannelPage = ({params}) => {
     const profile = {};
     const navigate = useNavigate();
     // if (!profile) return redirectToSignIn();
@@ -69,9 +67,9 @@ const ChannelPage = async ({params}) => {
     //     }
     // })
 
-    if (!channel || !member || !server) {
-        return navigate('/');
-    }
+    // if (!channel || !member || !server) {
+    //     return navigate('/');
+    // }
   return (
     <div className='bg-white dark:bg-[#313338] flex flex-col h-full'>
         <ChatHeader type='channel' name={channel?.name} serverId={params?.serverId} servers={servers} profile={profile} server={server}  />

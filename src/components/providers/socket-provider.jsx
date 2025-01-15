@@ -9,7 +9,7 @@ import { io as ClientIO } from 'socket.io-client'
 //     isConnected: boolean;
 // }
 
-const SocketContext = createContext<SocketContextType>({
+const SocketContext = createContext({
     socket: null,
     isConnected: false,
 })

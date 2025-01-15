@@ -12,6 +12,7 @@ const initialState = {
     isSuccess: false,
     message: '',
  }
+ 
  export const getAllUsers = createAsyncThunk('auth/all-users', async (id, thunkAPI) => {
     try {
         console.log('hello');

@@ -1,21 +1,16 @@
-import { currentProfile } from '@/lib/currentProfile'
-import { db } from '@/lib/db';
-import { redirect } from 'next/navigation';
 import React from 'react'
 import NavigationAction from './NavigationAction';
-import {Separator} from '@/components/ui/separator';
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Profile, Server } from '@prisma/client';
+import {Separator} from '../ui/separator';
+import { ScrollArea } from "../ui/scroll-area"
 import NavigationItem from './NavigationItem';
 import { ModeToggle } from '../mode-toggle';
-import { UserButton } from '@clerk/nextjs';
 
 // interface NavigationSidebarProps {
 //   profile: Profile,
 //   servers: Server[],
 // }
 
-const NavigationSidebar = async ({profile, servers}) => {
+const NavigationSidebar = ({profile, servers}) => {
   
   
   return (
@@ -33,11 +28,11 @@ const NavigationSidebar = async ({profile, servers}) => {
         </ScrollArea>
         <div className='pb-3 mt-auto flex items-center flex-col gap-y-4 '>
           <ModeToggle />
-          <UserButton afterSignOutUrl='/' appearance={{
+          {/* <UserButton afterSignOutUrl='/' appearance={{
             elements: {
               avatarBox: "h-[48px] w-[48px]"
             }
-          }} />
+          }} /> */}
         </div>
     </div>
   )
