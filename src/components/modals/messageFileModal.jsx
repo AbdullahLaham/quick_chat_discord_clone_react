@@ -9,27 +9,27 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-  } from "@/components/ui/dialog"
+  } from "../ui/dialog"
   import {
     Form,
     FormControl,
     FormField,
     FormItem,
-  } from "@/components/ui/form"
+  } from "../ui/form"
 
 import React from 'react'
 import { useForm } from "react-hook-form"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import FileUpload from "@/components/FileUpload"
-import { useRouter } from 'next/navigation'
-import useOrigin from '@/hooks/useOrigin'
-import { useModal } from '@/hooks/useModalStore'
+import { Input } from "../ui/input"
+import { Button } from "../ui/button"
+import FileUpload from "../FileUpload"
+import useOrigin from '../../hooks/useOrigin'
+import { useModal } from '../../hooks/useModalStore'
 import qs from 'query-string';
+import { useNavigate } from 'react-router-dom'
 
 const MessageFileModal = () => {
     
-    const router = useRouter();
+    const navigate = useNavigate();
 
     const {isOpen, onClose, type, data } = useModal();
     const {apiUrl, query} = data;
@@ -45,7 +45,7 @@ const MessageFileModal = () => {
     });
 
     
-    const form = useForm<z.infer<typeof formSchema>>({
+    const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             fileUrl: "",
@@ -64,7 +64,7 @@ const MessageFileModal = () => {
             });
 
             form.reset();
-            router.refresh();
+            navigate();
             handleClose();
 
         } catch(error) {

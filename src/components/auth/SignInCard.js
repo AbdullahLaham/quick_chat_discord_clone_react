@@ -11,6 +11,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { login } from '../../features/auth/authSlice';
+import { toast } from 'sonner';
 
 
 
@@ -32,10 +33,16 @@ const SignInCard = ({setState}) => {
     }
     const passwordProvider = (e) => {
       e.preventDefault();
-      setPending(true);
-      signIn({email, password})
-      // .catch(() => setError('invalid email or password'))
-
+      try {
+        setPending(true);
+        dispatch(login({email, password}));
+      } catch (error) {
+        console.log(error);
+        toast.error("something went wrong")
+      } finally {
+        setError("");
+        setPending(false);
+      }
     }
 
   return (

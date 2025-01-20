@@ -1,6 +1,6 @@
 import React from 'react'
 import { getCurrentUser } from '../features/auth/authSlice';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 // interface ServerPageProps {
 //   params: {
@@ -9,8 +9,9 @@ import { useDispatch } from 'react-redux';
 // }
 
 
-const ServerPage = ({params}) => {
-    const {serverId} = params;
+const ServerPage = () => {
+  
+    const {serverId} = useParams();
     // navigate
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -39,7 +40,7 @@ const ServerPage = ({params}) => {
     // });
     const server = {};
 
-    const initialChannel = server?.channels[0];
+    const initialChannel = server?.channels?.[0];
     
     if (initialChannel?.name !== 'general') return null;
 

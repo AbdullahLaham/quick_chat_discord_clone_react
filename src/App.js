@@ -14,9 +14,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='auth' element={<AuthScreen />} />
+        
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
+          <Route path='auth' element={<AuthScreen />} />
           <Route path="server/:serverId" element={<ServerLayout />}>
             {/* Default page for the server */}
             <Route index element={<ServerPage />} />

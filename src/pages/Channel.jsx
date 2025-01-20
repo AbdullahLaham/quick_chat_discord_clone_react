@@ -3,7 +3,7 @@ import React from 'react'
 import ChatInput from '../components/chat/ChatInput';
 import ChatHeader from '../components/chat/ChatHeader';
 import ChatMessages from '../components/chat/ChatMessages';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 // interface ChannelPageProps {
 //     params: {
@@ -11,13 +11,15 @@ import { useNavigate } from 'react-router-dom';
 //         channelId: string,
 //     }
 // }
+
 const ChannelType = {
     TEXT: 'TEXT',
     AUDIO: 'AUDIO',
     VIDEO: 'VIDEO',
 }
-const ChannelPage = ({params}) => {
+const ChannelPage = ({}) => {
     const profile = {};
+    const {serverId, channelId} = useParams();
     const navigate = useNavigate();
     // if (!profile) return redirectToSignIn();
     const server = {};
@@ -70,9 +72,12 @@ const ChannelPage = ({params}) => {
     // if (!channel || !member || !server) {
     //     return navigate('/');
     // }
+
+
   return (
     <div className='bg-white dark:bg-[#313338] flex flex-col h-full'>
-        <ChatHeader type='channel' name={channel?.name} serverId={params?.serverId} servers={servers} profile={profile} server={server}  />
+        <ChatHeader type='channel' name={channel?.name} serverId={serverId} servers={servers} profile={profile} server={server}  />
+        
         <div className='flex-1'>
             {
                 channel?.type == ChannelType.TEXT && (
@@ -90,10 +95,12 @@ const ChannelPage = ({params}) => {
                 // )
             }
 
+        
         </div>
         <ChatInput name={channel.name} type='channel' apiUrl='/api/socket/messages' query={{channelId: channel?.id, serverId: server?.id}} />
     </div>
   )
+
 }
 
 export default ChannelPage

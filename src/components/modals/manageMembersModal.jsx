@@ -6,28 +6,22 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-  } from "@/components/ui/dialog"
-  import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSubContent , DropdownMenuTrigger, DropdownMenuPortal, DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
+  } from "../ui/dialog"
+  import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSubContent , DropdownMenuTrigger, DropdownMenuPortal, DropdownMenuSeparator } from '../ui/dropdown-menu'
 import qs from 'query-string'
 
-import { useModal } from '@/hooks/useModalStore';
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react'
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { useModal } from '../../hooks/useModalStore';
+import React, { useState } from 'react';
 import { Check, Copy, Gavel, Loader2, MoreVertical, RefreshCw, Shield, ShieldAlert, ShieldCheck, ShieldQuestion } from "lucide-react";
-
 import axios from "axios";
-import { safeServer } from "@/types";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { Member, MemberRole } from "@prisma/client";
-import UserAvatar from "@/components/UserAvatar";
+import UserAvatar from "../UserAvatar";
 import { DropdownMenuSub, DropdownMenuSubTrigger } from "../ui/dropdown-menu";
-import toast from "react-hot-toast";
+import {toast} from "sonner";
+import { useNavigate } from "react-router-dom";
 
 const ManageMembersModal = () => {
-    const router = useRouter();
+    const navigate = useNavigate();
     const [loadingId, setLoadingId] = useState("");
     const {onOpen, isOpen, onClose, type, data} = useModal();
     const {server} = data;
@@ -52,7 +46,7 @@ const ManageMembersModal = () => {
             const response = await axios.patch(url, { role });
             console.log(response.data)
             toast.success(`member role changes to be ${role}`)
-            router.refresh();
+            navigate(0);
             onOpen("members", {server: response.data})
         } catch (error) {
             console.log(error);
@@ -73,7 +67,7 @@ const ManageMembersModal = () => {
                 }
             })
             const response = await axios.delete(url);
-            router.refresh();
+            navigate(0);
             toast.success(`member deleted successfully`)
             onOpen("members", {server: response.data})
         } catch (error) {

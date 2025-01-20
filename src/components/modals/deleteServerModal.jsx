@@ -1,5 +1,3 @@
-'use client'
-
 
 import {
     Dialog,
@@ -9,17 +7,17 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-  } from "@/components/ui/dialog"
+  } from "../ui/dialog"
 
-import { useModal } from '@/hooks/useModalStore';
-import { useRouter } from 'next/navigation';
+import { useModal } from '../../hooks/useModalStore';
+import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react'
-import { Button } from "@/components/ui/button";
+import { Button } from "../ui/button";
 import axios from "axios";
-import toast from "react-hot-toast";
+import {toast} from "sonner";
 
 const DeleteServerModal = () => {
-    const router = useRouter();
+    const navigate = useNavigate();
 
     const {onOpen, isOpen, onClose, type, data} = useModal();
     const {server} = data;
@@ -33,8 +31,8 @@ const DeleteServerModal = () => {
             await axios.delete(`/api/servers/${server?.id}`);
             onClose();
             toast.success("server Seleted successfully")
-            router.push('/');
-            router.refresh();
+            navigate('/');
+            navigate(0);
             
 
         } catch(error) {

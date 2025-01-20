@@ -1,4 +1,3 @@
-'use client'
 import axios from 'axios'
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -10,7 +9,7 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-  } from "@/components/ui/dialog"
+  } from "../ui/dialog"
   import {
     Form,
     FormControl,
@@ -19,25 +18,29 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-  } from "@/components/ui/form"
+  } from "../ui/form"
   import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue,
-  } from "@/components/ui/select"
+  } from "../ui/select"
 import React, { use, useEffect, useState } from 'react'
 import { useForm } from "react-hook-form"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { useParams, useRouter } from 'next/navigation'
-import { useModal } from '@/hooks/useModalStore'
-import { ChannelType } from '@prisma/client'
-import toast from 'react-hot-toast';
-
+import { Input } from "../ui/input"
+import { Button } from "../ui/button"
+import { useParams, useNavigate } from 'react-router-dom'
+import { useModal } from '../../hooks/useModalStore'
+// import { ChannelType } from '@prisma/client'
+import {toast} from 'sonner';
+const  ChannelType =  {
+    TEXT: "TEXT",
+    AUDIO: "AUDIO",
+    VIDEO: "VIDEO",
+  }
 const EditChannelModal = () => {
-    const router = useRouter();
+    const navigate = useNavigate();
 
     const {isOpen, onClose, type, data} = useModal();
     
@@ -51,11 +54,11 @@ const EditChannelModal = () => {
         }).refine((name) => name !== 'general', {
             message: 'Channel name cannot be "general"'
         }), 
-        type: z.nativeEnum(ChannelType),
+        // type: z.nativeEnum(ChannelType),
     });
 
     
-    const form = useForm<z.infer<typeof formSchema>>({
+    const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: channel?.name ,
@@ -79,7 +82,7 @@ const EditChannelModal = () => {
             await axios.patch(url, values);
             form.reset();
             toast.success("Channel updated Successfully")
-            router.refresh();
+            navigate(0);
             onClose();
             window.location.reload();
 

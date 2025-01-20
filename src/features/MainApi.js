@@ -13,8 +13,12 @@ API.interceptors.request.use((req) => {
 API.interceptors.response.use(
     response => response,
     error => {
-      const { config, status, data: {message} } = error.response;
-      const originalRequest = config;
+      // const { config, status, data: {message} } = error.response;
+      // const originalRequest = config;
+
+      
+
+      
     //   const refreshToken = localStorage.getItem(refreshTokenKey);
     //   if (status === 401) {
     //     return apiRefreshAccessToken(refreshToken)
@@ -28,11 +32,14 @@ API.interceptors.response.use(
     //       });
     //   }
 
-      if (status == 500 && message == "Token is Expires, Please Login again") {
-        toast.error("Token is Expires, Please Login again");
-        localStorage.clear();
 
-      }
+
+
+      // if (status == 500 && message == "Token is Expires, Please Login again") {
+      //   toast.error("Token is Expires, Please Login again");
+      //   localStorage.clear();
+
+      // }
     // console.log(error.response, status, 'ttttttttttttttttttt')
       return Promise.reject(error);
     },

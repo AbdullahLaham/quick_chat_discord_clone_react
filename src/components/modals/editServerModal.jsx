@@ -10,7 +10,7 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-  } from "@/components/ui/dialog"
+  } from "../ui/dialog"
   import {
     Form,
     FormControl,
@@ -19,18 +19,18 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-  } from "@/components/ui/form"
+  } from "../ui/form"
 
 import React, { useEffect, useState } from 'react'
 import { useForm } from "react-hook-form"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import FileUpload from "@/components/FileUpload"
-import { useRouter } from 'next/navigation'
-import { useModal } from '@/hooks/useModalStore'
+import { Input } from "../ui/input"
+import { Button } from "../ui/button"
+import FileUpload from "../FileUpload"
+import { useModal } from '../../hooks/useModalStore'
+import { useNavigate } from 'react-router-dom'
 
 const EditServerModal = () => {
-    const router = useRouter();
+    const navigate = useNavigate();
 
     const {isOpen, onClose, type, data} = useModal();
 
@@ -47,7 +47,7 @@ const EditServerModal = () => {
     }),
     });
     
-    const form = useForm<z.infer<typeof formSchema>>({
+    const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: "",
@@ -66,7 +66,7 @@ const EditServerModal = () => {
         try {
             await axios.patch(`/api/servers/${server?.id}`, values);
             form.reset();
-            router.refresh();
+            navigate(0);
             onClose();
             window.location.reload();
 

@@ -34,15 +34,15 @@ const ServerSidebar = ({serverId, server, profile}) => {
   // navigate
   let navigate = useNavigate();
     
-    const textChannels = server?.channels.filter((channel) => channel.type === 'TEXT');
-    const audioChannels = server?.channels.filter((channel) => channel.type === 'AUDIO');
-    const videoChannels = server?.channels.filter((channel) => channel.type === 'VIDEO');
+    const textChannels = server?.channels?.filter((channel) => channel.type === 'TEXT');
+    const audioChannels = server?.channels?.filter((channel) => channel.type === 'AUDIO');
+    const videoChannels = server?.channels?.filter((channel) => channel.type === 'VIDEO');
 
     const members = server?.members?.filter((member) => member?.profileId !== profile.id);
 
-    if (!server) return navigate('/');
+    // if (!server?.name) return navigate('/');
 
-    const role = server.members.find((member) => member.profileId === profile.id)?.role;
+    const role = server?.members?.find((member) => member.profileId === profile.id)?.role;
 
     
   return (

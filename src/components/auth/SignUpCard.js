@@ -11,6 +11,10 @@ import { TriangleAlert } from 'lucide-react';
 import { BsGoogle } from 'react-icons/bs';
 import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
+import {useDispatch} from 'react-redux'
+import { register } from '../../features/auth/authSlice';
+import { toast } from 'sonner';
+import {useNavigate} from 'react-router-dom'
 
 
 
@@ -22,8 +26,13 @@ const SignUpCard = ({setState}) => {
     const [pending, setPending] = useState(false);
     const [error, setError] = useState("");
 
+    // dispatch
+    const dispatch = useDispatch();
+    // navigate
+    const navigate = useNavigate()
     // const {signIn} = useAuthActions();
-    const signIn = () => {}
+
+    const signIn = {}
     const onProvider = (value) => {
       setPending(true);
       signIn(value)
@@ -37,9 +46,23 @@ const SignUpCard = ({setState}) => {
         return
       }
       setPending(true);
-      signIn("password", {name, email, password, flow: 'signUp'})
-      .catch(() => setError('something went wrong'))
-      .finally(() => setPending(false))
+      try {
+        const newUser = dispatch(register({name, email, password}));
+        console.log(newUser, 'userrrrrr');
+        if (newUser?.email) {
+          navigate('/');
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error("something went wrong")
+      } finally {
+        setError(null);
+        setPending(false);
+
+      }
+      // signIn("password", )
+      // .catch(() => setError('something went wrong'))
+      // .finally(() => setPending(false))
 
     }
 

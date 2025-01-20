@@ -38,15 +38,57 @@ const createServer = async (data) => {
     return res.data;
 }
 
+const updateServer = async (data) => {
+    const res = await API.post(`/servers/new-server`, data);
+    console.log(res);
 
+    if (res.data) {
+        return res.data;
+    }
 
+    return res.data;
+}
 
+const deleteServer = async (data) => {
+    const res = await API.post(`/servers/new-server`, data);
+    console.log(res);
 
+    if (res.data) {
+        return res.data;
+    }
+
+    return res.data;
+}
+const leaveServer = async (data) => {
+    const res = await API.post(`/servers/new-server`, data);
+    console.log(res);
+
+    if (res.data) {
+        return res.data;
+    }
+
+    return res.data;
+}
+
+const inviteCodeServer = async (data) => {
+    const res = await API.post(`/servers/new-server`, data);
+    console.log(res);
+
+    if (res.data) {
+        return res.data;
+    }
+
+    return res.data;
+}
 
 const serverService = {
     getServers,
     getCurrentServer,
     createServer,
+    updateServer,
+    deleteServer,
+    leaveServer,
+    inviteCodeServer
 
 }
 

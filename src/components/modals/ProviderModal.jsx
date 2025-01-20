@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import CreateServerModal from './createServerModal'
-import { useRouter } from 'next/navigation';
+import { useNavigate } from 'react-router-dom';
 import InviteModal from './InviteModal';
 import EditServerModal from './editServerModal';
 import ManageMembersModal from './manageMembersModal';
@@ -17,7 +17,7 @@ import DeleteMessageModal from './deleteMessageModal';
 
 const ProviderModal = () => {
     const [isMounted, setIsMounted] = useState(false);
-    const router = useRouter();
+    const navigate = useNavigate();
 
     useEffect(() => {
         setIsMounted(true)

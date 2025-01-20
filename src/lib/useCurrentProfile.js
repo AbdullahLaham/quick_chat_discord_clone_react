@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import API from "../features/MainApi";
 
 export function useCurrentProfile() {
   const [profile, setProfile] = useState(null);  // Profile data
@@ -16,10 +17,11 @@ export function useCurrentProfile() {
     }
 
     // Fetch profile data using the token
+
     const fetchProfile = async () => {
       try {
 
-        const response = await axios.get('/api/user/current-user', {
+        const response = await API.get('/user/get-logged-user', {
             headers: {
                 authorization: `Bearer ${token}`,  // Use the token in the Authorization header
             },
@@ -41,5 +43,5 @@ export function useCurrentProfile() {
     fetchProfile();
   }, []);  // Empty dependency array so this effect only runs once when the component mounts
 
-  return { profile, loading, error };
+  return { profile, loading, error};
 }

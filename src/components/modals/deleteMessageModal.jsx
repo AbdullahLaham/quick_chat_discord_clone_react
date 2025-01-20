@@ -10,7 +10,7 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-  } from "@/components/ui/dialog"
+  } from "../ui/dialog"
   import {
     Form,
     FormControl,
@@ -19,21 +19,21 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-  } from "@/components/ui/form"
+  } from "../ui/form"
 
 import React, { useEffect, useState } from 'react'
 import { useForm } from "react-hook-form"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import FileUpload from "@/components/FileUpload"
-import { useParams, useRouter } from 'next/navigation'
-import { useModal } from '@/hooks/useModalStore'
-import toast from 'react-hot-toast'
+import { Input } from "../ui/input"
+import { Button } from "../ui/button"
+import FileUpload from "../FileUpload"
+import { useParams, useNavigate } from 'react-router-dom'
+import { useModal } from '../../hooks/useModalStore'
+import {toast} from 'sonner'
 import qs from 'query-string'
 
 
 const DeleteMessageModal = () => {
-    const router = useRouter();
+    const navigate = useNavigate();
     const params = useParams();
     const {onOpen, isOpen, onClose, type, data} = useModal();
 
@@ -55,7 +55,7 @@ const DeleteMessageModal = () => {
             onClose();
             setIsLoading(false);
             toast.success("Channel Seleted successfully")
-            router.refresh();            
+            navigate(0);            
 
         } catch(error) {
             console.log(error);

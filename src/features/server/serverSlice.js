@@ -45,7 +45,7 @@ export const createServer = createAsyncThunk('servers/new-server', async (data, 
 
 
   
-export const currentServer = createAsyncThunk('servers/:serverId', async (data, thunkAPI) => {
+export const getCurrentServer = createAsyncThunk('servers/:serverId', async (data, thunkAPI) => {
     try {
         console.log('hello');
 
@@ -130,10 +130,10 @@ const brandSlice = createSlice({
 
 
 
-    .addCase(currentServer.pending,(state) => {state.isLoading = true }  )
+    .addCase(getCurrentServer.pending,(state) => {state.isLoading = true }  )
    
      
-    .addCase(currentServer.fulfilled,(state, action) => {
+    .addCase(getCurrentServer.fulfilled,(state, action) => {
         state.isLoading = false ;
         state.isError = false ;
         state.isSuccess = true;
@@ -143,7 +143,7 @@ const brandSlice = createSlice({
         // }
     })
 
-    .addCase(currentServer.rejected,(state, action) => {
+    .addCase(getCurrentServer.rejected,(state, action) => {
         state.isLoading = false ;
         state.isError = true;
         state.isSuccess = false;

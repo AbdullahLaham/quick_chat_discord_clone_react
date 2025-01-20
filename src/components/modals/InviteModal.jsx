@@ -6,20 +6,20 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-  } from "@/components/ui/dialog"
+  } from "../ui/dialog"
 
-import { useModal } from '@/hooks/useModalStore';
-import { useRouter } from 'next/navigation';
+import { useModal } from '../../hooks/useModalStore';
+import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react'
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import { Check, Copy, RefreshCw } from "lucide-react";
-import useOrigin from "@/hooks/useOrigin";
+import useOrigin from "../../hooks/useOrigin";
 import axios from "axios";
 
 const InviteModal = () => {
-    const router = useRouter();
+    const navigate = useNavigate();
 
     const {onOpen, isOpen, onClose, type, data} = useModal();
     const origin = useOrigin();
@@ -34,6 +34,7 @@ const InviteModal = () => {
 
         setTimeout(() => setCopied(false), 1000);
     }
+    
     const onNew = async () => {
         try {
             setIsLoading(true);

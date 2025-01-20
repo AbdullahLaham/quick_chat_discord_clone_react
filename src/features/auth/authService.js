@@ -38,13 +38,18 @@ const login = async (userData) => {
 
 
 const register = async (userData) => {
-    const res = await API.post(`/auth/signup`, userData);
-    console.log(res);
-    if (res.data) {
-        localStorage.setItem('auth',  JSON.stringify(res.data))
-    }
+    try {
+        console.log('hihi', 'hi')
+        const res = await API.post(`/auth/signup`, userData);
+        console.log(res);
+        if (res.data) {
+            localStorage.setItem('auth',  JSON.stringify(res.data))
+        }
 
     return res.data;
+    } catch(error) {
+
+    }
 }
 
 

@@ -7,18 +7,18 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-  } from "@/components/ui/dialog"
+  } from "../ui/dialog"
 
-import { useModal } from '@/hooks/useModalStore';
-import { useRouter } from 'next/navigation';
+import { useModal } from '../../hooks/useModalStore';
 import React, { useState } from 'react'
-import { Button } from "@/components/ui/button";
+import { Button } from "../ui/button";
 import axios from "axios";
-import toast from "react-hot-toast";
+import {toast} from "sonner";
+import { useNavigate } from "react-router-dom";
 
 
 const LeaveServerModal = () => {
-    const router = useRouter();
+    const navigate = useNavigate();
 
     const {onOpen, isOpen, onClose, type, data} = useModal();
     const {server} = data;
@@ -32,8 +32,8 @@ const LeaveServerModal = () => {
             await axios.patch(`/api/servers/${server?.id}/leave`);
             onClose();
             toast.success("you have left this server successfully")
-            router.refresh();
-            router.push('/');
+            navigate(0);
+            navigate('/');
 
         } catch(error) {
             console.log(error);

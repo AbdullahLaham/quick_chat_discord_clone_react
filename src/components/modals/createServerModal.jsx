@@ -28,9 +28,17 @@ import { Button } from "../ui/button"
 import FileUpload from "../FileUpload"
 import { useNavigate } from 'react-router-dom'
 import { useModal } from '../../hooks/useModalStore'
+import { useDispatch, useSelector } from 'react-redux'
+import { createServer } from '../../features/server/serverSlice'
 
 const CreateServerModal = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const {newServer} = useSelector((state) => state?.server);
+
+    // image after upload
+    const {images} = useSelector((state) => state?.uploads);
 
     const {isOpen, onClose, type} = useModal();
 
@@ -40,28 +48,26 @@ const CreateServerModal = () => {
     name: z.string().min(2, {
         message: "Server name is required.",
     }),
-    imageUrl: z.string().min(2, {
-        message: "Server image is required.",
-    }),
+    imageUrl: z.string().optional(),
     });
     
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: "",
-            imageUrl: "",
+            imageUrl: images?.[0]?.['url'],
         }
     });
 
     const isLoading = form.formState.isSubmitting;
 
-    const onSubmit = async (values) => {
+    const onSubmit = (values) => {
         try {
-            await axios.post("/api/servers", values);
+            form.setValue("imageUrl", images[0]['url']);
+            dispatch(createServer(form.getValues()));
             form.reset();
-            navigate(0);
+            // navigate(0);
             onClose();
-            window.location.reload();
 
         } catch(error) {
             console.log(error);
