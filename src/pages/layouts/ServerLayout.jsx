@@ -1,24 +1,26 @@
-import ServerSidebar from '../../components/server/ServerSidebar';
+// import ServerSidebar from '../../components/server/ServerSidebar';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import React, { useEffect } from 'react'
 import { useCurrentProfile } from '../../lib/useCurrentProfile';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentServer } from '../../features/server/serverSlice';
+import ServerSidebar from '../../components/server/ServerSidebar';
 
 const ServerIdLayout = () => {
 
     const profile = useCurrentProfile();
-    const {currentServer} = useSelector((state) => state?.server)
+    const {currentServer: server} = useSelector((state) => state?.server)
     const {serverId} = useParams();
+
+    console.log(serverId, 'server');
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     useEffect(() => {
-          if (!currentServer) {
-            dispatch(getCurrentServer(serverId))
-          }
-        }, []);
+      
+          dispatch(getCurrentServer(serverId));
+        }, [serverId]);
 
         
     if (!profile) {
@@ -66,8 +68,8 @@ const ServerIdLayout = () => {
     //  if (!server) return redirect('/');
   return (
     <div className='h-full '>
-        <div className='hidden md:flex h-full w-60 z-20 flex-col inset-y-0 fixed'>
-           <ServerSidebar serverId={serverId} profile={profile} server={currentServer}  />
+        <div className=' lg:flex md:flex h-full w-60 z-20 flex-col inset-y-0 fixed'>
+           <ServerSidebar serverId={serverId} profile={profile} server={server}  />
         </div>
         <main className='h-full md:pl-60 '>
              <Outlet />

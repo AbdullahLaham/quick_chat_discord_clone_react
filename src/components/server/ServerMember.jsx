@@ -32,7 +32,7 @@ const ServerMember = ({member, server, role}) => {
     const Icon = iconMap[member.role];
     const {onOpen} = useModal();
     const navigate = useNavigate();
-
+  console.log('currentmember', member)
     const onClick = () => {
       navigate(`/servers/${server?.id}/conversations/${member?.id}`)
     }

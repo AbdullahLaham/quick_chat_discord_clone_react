@@ -21,7 +21,7 @@ const NavigationSidebar = ({profile, servers}) => {
           {servers?.map((server) => {
             return(
               <div key={server.id} className='mb-4'>
-                <NavigationItem id={server.id} imageUrl={server.imageUrl} name={server.name} />
+                <NavigationItem id={server._id} imageUrl={server.imageUrl} name={server.name} />
               </div>
             )
           })}

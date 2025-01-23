@@ -4,7 +4,7 @@ import ChatInput from '../components/chat/ChatInput';
 import ChatHeader from '../components/chat/ChatHeader';
 import ChatMessages from '../components/chat/ChatMessages';
 import { useNavigate, useParams } from 'react-router-dom';
-
+import {useSelector} from 'react-redux'
 // interface ChannelPageProps {
 //     params: {
 //         serverId: string,
@@ -22,7 +22,7 @@ const ChannelPage = ({}) => {
     const {serverId, channelId} = useParams();
     const navigate = useNavigate();
     // if (!profile) return redirectToSignIn();
-    const server = {};
+    const {currentServer: server} = useSelector((state) => state.server);
     const channel = {};
     const servers = [];
     const member = {};
@@ -48,6 +48,7 @@ const ChannelPage = ({}) => {
     //         serverId: params.serverId,
     //     }
     // })
+
     // const server = await db.server.findUnique({
     //     where: {
     //         id: params.serverId
@@ -69,9 +70,9 @@ const ChannelPage = ({}) => {
     //     }
     // })
 
-    // if (!channel || !member || !server) {
-    //     return navigate('/');
-    // }
+    if (!channel || !member || !server) {
+        return navigate('/');
+    }
 
 
   return (

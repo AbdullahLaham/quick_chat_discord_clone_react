@@ -5,10 +5,11 @@ import CreateServerModal from '../../components/modals/createServerModal';
 import NavigationSidebar from '../../components/navigation/NavigationSidebar';
 import { Outlet, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentUser } from '../../features/auth/authSlice';
 import ProviderModal from '../../components/modals/ProviderModal';
 import { useCurrentProfile } from '../../lib/useCurrentProfile';
+import { getServers } from '../../features/server/serverSlice';
 // import { getServers } from '../../features/server/serverSlice';
 const MainLayout = () => {
 
@@ -18,15 +19,17 @@ const MainLayout = () => {
   // const {profile} = useCurrentProfile();
   let profile = {}
   console.log('currentProfile', profile);
-  
- useEffect(() => {
-    // dispatch(getServers());
+  const {servers} = useSelector((state) => state?.server);
+
+  useEffect(() => {
+    dispatch(getServers());
   }, []);
   if (!profile) {
     return navigate("/");
   }
- 
-  // const servers = dispatch(get);
+
+
+  console.log('servs', servers);
 
   // const servers = await db.server.findMany({
   //   where: {
@@ -38,21 +41,20 @@ const MainLayout = () => {
   //   }
   // })
 
-  const servers = [];
 
 
   return (
     <ClientOnly>
-        <ProviderModal />
-        <div className='md:flex h-full w-[4.5rem] z-30 flex-col fixed inset-y-0'>
-            <NavigationSidebar servers={servers} profile={profile} />
-        </div>
-        <main className='md:pl-[4.5rem] h-full '>
-            <Outlet />
-        </main>
+      <ProviderModal />
+      <div className='md:flex h-full w-[4.5rem] z-30 flex-col fixed inset-y-0'>
+        <NavigationSidebar servers={servers} profile={profile} />
+      </div>
+      <main className='md:pl-[4.5rem] h-full '>
+        <Outlet />
+      </main>
     </ClientOnly>
   )
 }
 
-export default MainLayout ;
+export default MainLayout;
 

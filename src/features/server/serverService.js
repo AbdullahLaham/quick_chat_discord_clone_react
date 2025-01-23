@@ -4,7 +4,7 @@ import Cookies from 'cookies-js'
 
 const getServers = async () => {
     const res = await API.get(`/servers`);
-    console.log(res);
+    console.log(res, 'servers');
 
     if (res.data) {
         return res.data;

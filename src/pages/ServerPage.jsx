@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { getCurrentUser } from '../features/auth/authSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { getCurrentServer } from '../features/server/serverSlice';
 // interface ServerPageProps {
 //   params: {
 //     serverId: string,
@@ -16,8 +17,15 @@ const ServerPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const profile = dispatch(getCurrentUser());
+
+    useEffect(() => {
+          
+              dispatch(getCurrentServer(serverId));
+            }, [serverId]);
     if (!profile) return navigate('/auth', {replace: true});
 
+    
+        
     // const server = await db.server.findUnique({
     //   where: {
     //     id: serverId,

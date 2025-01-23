@@ -10,6 +10,7 @@ import { Separator } from '../ui/separator';
 import ServerSection from './ServerSection';
 import ServerChannel from './ServerChannel';
 import ServerMember from './ServerMember';
+import { useSelector } from 'react-redux';
 
 // interface ServerSidebarProps {
 //     serverId?: string,
@@ -30,7 +31,11 @@ const roleIconMap = {
 
 }
 
-const ServerSidebar = ({serverId, server, profile}) => {
+const ServerSidebar = ({serverId, profile}) => {
+
+  // server
+  const {currentServer: server} = useSelector((state) => state.server);console.log('from comp', server)
+
   // navigate
   let navigate = useNavigate();
     
@@ -38,11 +43,11 @@ const ServerSidebar = ({serverId, server, profile}) => {
     const audioChannels = server?.channels?.filter((channel) => channel.type === 'AUDIO');
     const videoChannels = server?.channels?.filter((channel) => channel.type === 'VIDEO');
 
-    const members = server?.members?.filter((member) => member?.profileId !== profile.id);
+    const members = server?.members?.filter((member) => member?.profile._id !== profile._id);
 
     // if (!server?.name) return navigate('/');
 
-    const role = server?.members?.find((member) => member.profileId === profile.id)?.role;
+    const role = server?.members?.find((member) => member.profile._id === profile._id)?.role;
 
     
   return (
@@ -89,15 +94,17 @@ const ServerSidebar = ({serverId, server, profile}) => {
               }))
             },
           ]} />
+          
           <Separator className='bg-zinc-200 dark:bg-zinc-700 rounded-md my-2 ' />
           {!!textChannels?.length && (
             <div className='mb-2'>
+              
               <ServerSection sectionType='channels' channelType={'TEXT'} role={role} server={server} label='Text Channels'  />
               <div className='space-y-[2px] '>
                 {
                   textChannels?.map((channel) => {
                     return (
-                      <ServerChannel key={channel?.id} channel={channel} role={role} server={server} />
+                      <ServerChannel key={channel?._id} channel={channel} role={role} server={server} />
                     )
                   })
                 }
@@ -141,7 +148,7 @@ const ServerSidebar = ({serverId, server, profile}) => {
                 {
                   members?.map((member) => {
                     return (
-                      <ServerMember key={member?.id} member={member} role={role} server={server} />
+                      <ServerMember key={member?._id} member={member} role={role} server={server} />
                     )
                   })
                 }
