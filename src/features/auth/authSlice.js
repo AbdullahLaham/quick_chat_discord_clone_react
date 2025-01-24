@@ -4,7 +4,7 @@ import Cookies from 'cookies-js';
 import { toast } from 'sonner';
 
 const initialState = { 
-    user: localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth')): null,
+    currentUser: localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth')): null,
     allUsers: [],
     userData: {},
     isError: false,
@@ -165,7 +165,7 @@ const authSlice = createSlice({
         state.isLoading = false ;
         state.isError = true;
         state.isSuccess = false;
-        state.userData = null;
+        state.currentUser = null;
         if (state?.isError) {
             toast.error("Something Went Error")
         }
@@ -180,7 +180,7 @@ const authSlice = createSlice({
         state.isLoading = false ;
         state.isError = false;
         state.isSuccess = true;
-        state.user = action?.payload;
+        state.currentUser = action?.payload;
         if (state?.isSuccess) {
             toast.success("Verification Done Successfully")
         }
@@ -204,7 +204,7 @@ const authSlice = createSlice({
         state.isLoading = false ;
         state.isError = false;
         state.isSuccess = true;
-        state.user = action?.payload;
+        state.currentUser = action?.payload;
         if (state?.isSuccess) {
             toast.success("User Created Successfully")
         }

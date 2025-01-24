@@ -9,7 +9,8 @@ import ServerSidebar from '../../components/server/ServerSidebar';
 const ServerIdLayout = () => {
 
     const profile = useCurrentProfile();
-    const {currentServer: server} = useSelector((state) => state?.server)
+    const {currentServer: server} = useSelector((state) => state?.server);
+    
     const {serverId} = useParams();
 
     console.log(serverId, 'server');

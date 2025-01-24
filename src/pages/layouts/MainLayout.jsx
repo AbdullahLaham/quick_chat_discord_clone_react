@@ -20,16 +20,19 @@ const MainLayout = () => {
   let profile = {}
   console.log('currentProfile', profile);
   const {servers} = useSelector((state) => state?.server);
+  const {currentUser} = useSelector((state) => state?.auth);
 
   useEffect(() => {
     dispatch(getServers());
   }, []);
+  
   if (!profile) {
     return navigate("/");
   }
 
 
   console.log('servs', servers);
+  console.log('user', currentUser);
 
   // const servers = await db.server.findMany({
   //   where: {

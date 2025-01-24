@@ -40,7 +40,7 @@ const handleRemoveImage = useCallback(() => {
 
 
 
-    const fileType = images?.[0]?.['url'].split(".").pop();
+    const fileType = images?.[0]?.['url']?.split(".")?.pop();
 
     if (images?.[0]?.['url'] && fileType !== 'pdf') {
         return (

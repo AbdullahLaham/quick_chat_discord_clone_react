@@ -34,6 +34,8 @@ import { useParams, useNavigate } from 'react-router-dom'
 
 import { useModal } from '../../hooks/useModalStore'
 import {toast} from 'sonner';
+import { useDispatch } from 'react-redux';
+import { createChannel } from '../../features/channel/channelSlice';
 const  ChannelType =  {
     TEXT: "TEXT",
     AUDIO: "AUDIO",
@@ -41,6 +43,7 @@ const  ChannelType =  {
   }
 const CreateChannelModal = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const {isOpen, onClose, type, data} = useModal();
     const {channelType} = data;
@@ -65,27 +68,33 @@ const CreateChannelModal = () => {
             type: channelType || ChannelType?.TEXT,
         }
     });
+
     useEffect(() => {
         if (channelType) form.setValue('type', channelType)
         else form.setValue('type', ChannelType?.TEXT)
     }, [channelType, form])
+
+
     const isLoading = form.formState.isSubmitting;
 
     const onSubmit = async (values) => {
         try {
             const url = qs.stringifyUrl({
-                url: '/api/channels',
+                url: '/channels',
                 query: {
                     serverId: params?.serverId,
 
                 }
-            })
-            await axios.post(url, values);
+            });
+            const submitData = {data: form.getValues()};
+
+            dispatch(createChannel({...submitData?.data, url}))
+
+            // await axios.post(url, values);
             form.reset();
-            toast.success("Channel created Successfully")
-            navigate(0);
+            toast.success("Channel created Successfully");
+            // navigate(0);
             onClose();
-            window.location.reload();
 
         } catch(error) {
             console.log(error);
@@ -103,7 +112,7 @@ const CreateChannelModal = () => {
             {/* <DialogTrigger>Open</DialogTrigger> */}
             <DialogContent className="bg-white text-black p-0 overflow-hidden">
                 <DialogHeader className="pt-8 px-6 ">
-                <DialogTitle className="text-2xl text-center font-semibold">Create Channel</DialogTitle>
+                    <DialogTitle className="text-2xl text-center font-semibold">Create Channel</DialogTitle>
                 </DialogHeader>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -127,7 +136,7 @@ const CreateChannelModal = () => {
                                 name="type"
                                 render={({ field }) => (
                                     <FormItem className='bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0  ' placeholder='Enter Channel Name' >
-                                        <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">Channel name</FormLabel>
+                                        <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">Channel Type</FormLabel>
                                         <Select onValueChange={field.onChange} defaultValue={field.value} disabled={isLoading} {...field}  >
                                                 <FormControl>
                                                     <SelectTrigger className='bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none' >

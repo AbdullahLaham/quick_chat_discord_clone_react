@@ -18,11 +18,13 @@ const ChannelType = {
     VIDEO: 'VIDEO',
 }
 const ChannelPage = ({}) => {
-    const profile = {};
     const {serverId, channelId} = useParams();
+    const {currentUser: profile} = useSelector((state) => state?.auth);
+    const {currentServer: server} = useSelector((state) => state.server);
+
     const navigate = useNavigate();
     // if (!profile) return redirectToSignIn();
-    const {currentServer: server} = useSelector((state) => state.server);
+    
     const channel = {};
     const servers = [];
     const member = {};

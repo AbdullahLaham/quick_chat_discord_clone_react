@@ -2,7 +2,7 @@ import API from "../MainApi"
 
 export const uploadImage = async (data) => {
     try {
-        const res = await API.put('/server/upload', data);
+        const res = await API.put('/servers/upload', data);
 
         if (res.data) {
             localStorage.setItem('images', JSON.stringify(res.data));
@@ -19,7 +19,7 @@ export const uploadImage = async (data) => {
 
 export const deleteImage = async (id) => {
     try {
-        const res = await API.delete(`/listings/delete-image/${id}`);
+        const res = await API.delete(`/servers/delete-image/${id}`);
         if (res.data) {
             localStorage.setItem('images', JSON.stringify(res.data))
         }
