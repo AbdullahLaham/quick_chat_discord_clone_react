@@ -20,6 +20,8 @@ import {toast} from 'sonner'
 import { useModal } from '../../hooks/useModalStore'
 import EmojiPicker from '../EmojiPicker'
 import { useNavigate,  } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { addMessage } from '../../features/message/messageSlice'
 // interface ChatInputProps {
 //     apiUrl: string,
 //     query: Record<string, any>,
@@ -30,6 +32,7 @@ const formSchema = z.object({
     content: z.string().min(1),
 })
 const ChatInput = ({apiUrl, query, name, type}) => {
+    const dispatch = useDispatch();
 
     const {onOpen} = useModal();
   const form = useForm({
@@ -40,15 +43,16 @@ const ChatInput = ({apiUrl, query, name, type}) => {
   });
 
   const isLoading = form.formState.isSubmitting;
+  
   const onSubmit = async (values) => {
     try {
 
         const url = qs.stringifyUrl({
-            url: apiUrl,
+            url: `${apiUrl}/new-message`,
             query,
         });
+        dispatch(addMessage({url, data: form.getValues()}))
 
-        await axios.post(url, values);
         form.reset();
 
     } catch (error) {

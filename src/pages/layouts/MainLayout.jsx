@@ -18,12 +18,15 @@ const MainLayout = () => {
 
   // const {profile} = useCurrentProfile();
   let profile = {}
+
   console.log('currentProfile', profile);
+
   const {servers} = useSelector((state) => state?.server);
   const {currentUser} = useSelector((state) => state?.auth);
 
   useEffect(() => {
     dispatch(getServers());
+    
   }, []);
   
   if (!profile) {
@@ -50,14 +53,17 @@ const MainLayout = () => {
     <ClientOnly>
       <ProviderModal />
       <div className='md:flex h-full w-[4.5rem] z-30 flex-col fixed inset-y-0'>
-        <NavigationSidebar servers={servers} profile={profile} />
+        <NavigationSidebar servers={servers} profile={currentUser} />
       </div>
       <main className='md:pl-[4.5rem] h-full '>
         <Outlet />
       </main>
     </ClientOnly>
   )
+
+  
 }
+
 
 export default MainLayout;
 

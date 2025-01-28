@@ -2,6 +2,7 @@ import qs from "query-string";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 import { useSocket } from "../components/providers/socket-provider";
+import API from "../features/MainApi";
 
 
 export const useChatQuery = ({ queryKey, apiUrl, paramKey, paramValue }) => {
@@ -10,7 +11,7 @@ export const useChatQuery = ({ queryKey, apiUrl, paramKey, paramValue }) => {
     const fetchMessages = async ({ pageParam = undefined }) => {
         try {
           const url = qs.stringifyUrl({
-            url: apiUrl,
+            url: `${apiUrl}/all-messages`,
             
             query: {
               cursor: pageParam,
@@ -19,11 +20,11 @@ export const useChatQuery = ({ queryKey, apiUrl, paramKey, paramValue }) => {
   
           }, { skipNull: true });
       
-          const res = await fetch(url);
+          const data = await API.get(url);
           
-          const data =  res.json();
+          // const data =  res;
           console.log(data, 'rrrrrrrrrrrrrrr')
-          return data;
+          return data?.data;
         } catch(error) {
           console.log(error)
         }

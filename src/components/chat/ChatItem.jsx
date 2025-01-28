@@ -24,6 +24,8 @@ import { cn } from '../../lib/utils'
 import {toast} from 'sonner';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useModal } from '../../hooks/useModalStore';
+import { useDispatch } from 'react-redux';
+import { updateMessage } from '../../features/message/messageSlice';
 
 
 // interface ChatItemProps {
@@ -49,6 +51,9 @@ const ChatItem = ({ id, content, member, timestamp, fileUrl, deleted, currentMem
 
     }
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const {serverId, channelId} = useParams();
+
     // delete messagee modal onOpen function
 
     const {onOpen} = useModal();
@@ -69,14 +74,20 @@ const ChatItem = ({ id, content, member, timestamp, fileUrl, deleted, currentMem
     const onSubmit = async (values) => {
         try {
             const url = qs.stringifyUrl({
-                url: `${socketUrl}/${id}`,
-                query: socketQuery,
+                url: `${id}`,
+                query: {
+                    serverId,
+                    channelId,
+                    messageId: id,
+                },
+                
             });
-            await axios.patch(url, values);
+            dispatch(updateMessage({url, data: form.getValues()}))
+
             toast.success("message updated successfully")
             form.reset();
             setIsEditing(false)
-           navigate(0);
+        //    navigate(0);
 
         } catch (error) {
             toast.error("something went wrong")
@@ -124,9 +135,10 @@ const ChatItem = ({ id, content, member, timestamp, fileUrl, deleted, currentMem
     <div className='relative group flex items-center hover:bg-black/5 p-4 transition w-full '>
         <div className='group flex gap-x-2 items-center w-full '>
             <div onClick={onMemberClick} className='cursor-pointer hover:drop-shadow-md transition'>
-                <UserAvatar src={member?.profile?.imageUrl} />
+                <UserAvatar src={member?.profile?.imageUrl} name={member?.profile?.name} />
             </div>
             <div className='flex flex-col w-full'>
+                
                 <div className='flex items-center gap-x-2 '>
                     <div className='flex items-center gap-x-2'>
                         <p onClick={onMemberClick} className='font-semibold text-sm hover:underline cursor-pointer'>
@@ -142,11 +154,13 @@ const ChatItem = ({ id, content, member, timestamp, fileUrl, deleted, currentMem
                     </span>
                 
                 </div>
+
                 {isImage && (
                     <a href={fileUrl} target='_blank' rel='noopener noreferrer' className='relative aspect-square rounded-md mt-2 overflow-hidden border flex items-center bg-secondary h-48 w-48'>
                         {/* <Image src={fileUrl} alt={content || ""} fill className='object-cover' /> */}
                     </a>
                 )}
+
                 {isPDF && (
                     <a href={fileUrl} target='_blank' rel='noopener noreferrer' className='relative aspect-auto rounded-md mt-2 overflow-hidden border flex items-center bg-secondary h-auto w-48'>
                         <div className="relative flex items-center p-2 mt-2 rounded-md bg-background/10 ">

@@ -10,6 +10,7 @@ import { Loader2, ServerCrash } from 'lucide-react'
 import ChatItem from './ChatItem'
 import { useChatSocket } from '../../hooks/useChatSocket';
 import { useChatScroll } from '../../hooks/useChatScroll';
+import { useSelector } from 'react-redux';
 
 // interface ChatMessagesProps {
 //     name: string,
@@ -47,14 +48,17 @@ const ChatMessages = ({
     const addKey = `chat:${chatId}:messages`;
     const updateKey = `chat:${chatId}:messages:update`
 
-    const chatRef = useRef<ElementRef<"div">>(null);
-    const bottomRef = useRef<ElementRef<"div">>(null);
+    const chatRef = useRef(null);
+    const bottomRef = useRef(null);
 
+
+    const {messages} = useSelector((state) => state?.message)
+    
     
     const {data, fetchNextPage, hasNextPage, isFetchingNextPage, status} = useChatQuery({apiUrl, paramKey, paramValue, queryKey })
-    useChatSocket({queryKey, updateKey, addKey})
+    useChatSocket({queryKey, updateKey, addKey});
     useChatScroll({chatRef, bottomRef, loadMore: fetchNextPage, shouldLoadMore: (!isFetchingNextPage && !!hasNextPage), count: data?.pages[0]?.items?.length ?? 0})
-    console.log(data, 'daaaaaaaaaaaaaa');
+    console.log(messages, 'daaaaaaaaaaaaaa');
      
     if (status == 'loading') {
         return (
@@ -66,16 +70,19 @@ const ChatMessages = ({
             </div>
         )
     }
-    if (status == 'error') {
-        return (
-            <div className='flex flex-col flex-1 h-full justify-center items-center'>
-                <ServerCrash className='h-7 w-7 text-zinc-500  my-4' />
-                <p className='text-xs text-zinc-500 dark:text-zinc-400'>
-                    Something Went Wrong...
-                </p>
-            </div>
-        )
-    }
+    
+    // if (status == 'error') {
+    //     return (
+    //         <div className='flex flex-col flex-1 h-full justify-center items-center'>
+    //             <ServerCrash className='h-7 w-7 text-zinc-500  my-4' />
+    //             <p className='text-xs text-zinc-500 dark:text-zinc-400'>
+    //                 Something Went Wrong...
+    //             </p>
+    //         </div>
+    //     )
+    // }
+
+
     return (
     <div ref={chatRef} className='flex-1 h-full flex flex-col py-4 overflow-y-auto'>
         {!hasNextPage && <div className='flex-1' />}
@@ -96,7 +103,7 @@ const ChatMessages = ({
             {data?.pages?.map((group, i) => (
                 <Fragment key={i}>
                     {group?.items?.map((message, i) => (
-                        <ChatItem key={message?.id} member={message?.member}  content={message?.content} currentMember={member}  id={message?.id} fileUrl={message?.fileUrl} deleted={message?.deleted} timestamp={format(new Date(message.createdAt), DATE_FORMAT)} isUpdated={message?.updatedAt !== message?.createdAt} socketUrl={socketUrl} socketQuery={socketQuery}   />
+                        <ChatItem key={message?._id} member={message?.member}  content={message?.content} currentMember={member}  id={message?._id} fileUrl={message?.fileUrl} deleted={message?.deleted} timestamp={format(new Date(message.createdAt), DATE_FORMAT)} isUpdated={message?.updatedAt !== message?.createdAt} socketUrl={socketUrl} socketQuery={socketQuery}   />
                     ))}
                 </Fragment>
             ))}

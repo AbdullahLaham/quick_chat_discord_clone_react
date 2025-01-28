@@ -48,6 +48,16 @@ const updateServer = async (data, id) => {
 
     return res.data;
 }
+const getCurrentServerMember = async (id) => {
+    const res = await API.put(`/servers/current-member/${id}`);
+    console.log(res);
+
+    if (res.data) {
+        return res.data;
+    }
+
+    return res.data;
+}
 
 const deleteServer = async (id) => {
     const res = await API.delete(`/servers/${id}/new-server`);
@@ -88,7 +98,8 @@ const serverService = {
     updateServer,
     deleteServer,
     leaveServer,
-    inviteCodeServer
+    inviteCodeServer,
+    getCurrentServerMember,
 
 }
 

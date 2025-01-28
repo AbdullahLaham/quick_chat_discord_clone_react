@@ -5,12 +5,19 @@ import { Provider } from 'react-redux';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {store} from './app/store'
+import { SocketProvider } from './components/providers/socket-provider';
+import { QueryProvider } from './components/providers/query-provider';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <App />
+    <SocketProvider>
+      <QueryProvider>
+        <App />
+      </QueryProvider>
+    </SocketProvider>
+    
   </Provider>
 );
 

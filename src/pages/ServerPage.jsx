@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
 import { getCurrentUser } from '../features/auth/authSlice';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentServer } from '../features/server/serverSlice';
+import { getCurrentChannel } from '../features/channel/channelSlice';
 // interface ServerPageProps {
 //   params: {
 //     serverId: string,
@@ -11,18 +12,19 @@ import { getCurrentServer } from '../features/server/serverSlice';
 
 
 const ServerPage = () => {
-  
-    const {serverId} = useParams();
+    const {currentUser} = useSelector((state) => state?.auth)
+    const {serverId, channelId} = useParams();
     // navigate
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const profile = dispatch(getCurrentUser());
+    
 
     useEffect(() => {
-          
+              dispatch(getCurrentUser());
               dispatch(getCurrentServer(serverId));
             }, [serverId]);
-    if (!profile) return navigate('/auth', {replace: true});
+
+    if (!currentUser) return navigate('/auth', {replace: true});
 
     
         
@@ -53,7 +55,7 @@ const ServerPage = () => {
     if (initialChannel?.name !== 'general') return null;
 
 
-  return navigate(`/servers/${serverId}/channels/${initialChannel?.id}`)
+  return navigate(`/servers/${serverId}/channels/${initialChannel?._id}`)
 }
 
 export default ServerPage ;

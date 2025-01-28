@@ -1,10 +1,12 @@
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import ChatInput from '../components/chat/ChatInput';
 import ChatHeader from '../components/chat/ChatHeader';
 import ChatMessages from '../components/chat/ChatMessages';
+import MediaRoom from '../components/MediaRoom';
 import { useNavigate, useParams } from 'react-router-dom';
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
+import { getCurrentChannel } from '../features/channel/channelSlice';
 // interface ChannelPageProps {
 //     params: {
 //         serverId: string,
@@ -17,15 +19,18 @@ const ChannelType = {
     AUDIO: 'AUDIO',
     VIDEO: 'VIDEO',
 }
+
 const ChannelPage = ({}) => {
     const {serverId, channelId} = useParams();
     const {currentUser: profile} = useSelector((state) => state?.auth);
     const {currentServer: server} = useSelector((state) => state.server);
+    const {currentChannel: channel} = useSelector((state) => state.channel);
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     // if (!profile) return redirectToSignIn();
     
-    const channel = {};
+
     const servers = [];
     const member = {};
 
@@ -34,15 +39,8 @@ const ChannelPage = ({}) => {
     //         id: params?.channelId,
     //     }
     // });
-    // const servers = await db.server.findMany({
-    //     where: {
-    //         members: {
-    //             some: {
-    //                 profileId: profile.id,
-    //             }
-    //         }
-    //     }
-    //   })
+
+
 
     // const member = await db.member.findFirst({
     //     where: {
@@ -50,6 +48,8 @@ const ChannelPage = ({}) => {
     //         serverId: params.serverId,
     //     }
     // })
+
+
 
     // const server = await db.server.findUnique({
     //     where: {
@@ -71,7 +71,8 @@ const ChannelPage = ({}) => {
     //         }
     //     }
     // })
-
+   
+    
     if (!channel || !member || !server) {
         return navigate('/');
     }
@@ -83,24 +84,24 @@ const ChannelPage = ({}) => {
         
         <div className='flex-1'>
             {
-                channel?.type == ChannelType.TEXT && (
-                    <ChatMessages member={member} type='channel' name={channel?.name} chatId={channel?.id} apiUrl='/api/messages' socketUrl='/api/socket/messages' socketQuery={{serverId: server?.id, channelId: channel?.id}} paramKey='channelId' paramValue={channel?.id} />
+                channel?.type == 'TEXT' && (
+                    <ChatMessages member={member} type='channel' name={channel?.name} chatId={channel?.id} apiUrl='http://localhost:5000/messages' socketUrl='/api/socket/messages' socketQuery={{serverId: server?.id, channelId: channel?.id}} paramKey='channelId' paramValue={channel?._id} />
                 )
             }
             {
-                // channel?.type == ChannelType.AUDIO && (
-                //     <MediaRoom chatId={channel?.id} audio={true} video={false} />
-                // )
+                channel?.type == 'AUDIO' && (
+                    <MediaRoom chatId={channel?.id} audio={true} video={false} />
+                )
             }
             {
-                // channel?.type == ChannelType.VIDEO && (
-                //     <MediaRoom chatId={channel?.id} audio={false} video={true} />
-                // )
+                channel?.type == 'VIDEO' && (
+                    <MediaRoom chatId={channel?.id} audio={false} video={true} />
+                )
             }
 
         
         </div>
-        <ChatInput name={channel.name} type='channel' apiUrl='/api/socket/messages' query={{channelId: channel?.id, serverId: server?.id}} />
+        <ChatInput name={channel.name} type='channel' apiUrl='/messages' query={{channelId: channelId, serverId: server?._id}} />
     </div>
   )
 

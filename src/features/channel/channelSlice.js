@@ -18,6 +18,19 @@ const initialState = {
     message: '',
  }
 
+ 
+
+ export const getCurrentChannel = createAsyncThunk('channel/get-channel', async (id, thunkAPI) => {
+    try {
+        console.log('hello');
+
+        return await channelService.getCurrentChannel(id);
+        
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error)
+    }
+
+ })
 
 
 export const getChannels = createAsyncThunk('channel/get-channels', async (data, thunkAPI) => {
@@ -53,7 +66,7 @@ export const createChannel = createAsyncThunk('channel/new-channel', async (data
     try {
         console.log('hello');
 
-        return await channelService.updateChannel(data, data?.id);
+        return await channelService.updateChannel(data);
         
     } catch (error) {
         return thunkAPI.rejectWithValue(error)
@@ -61,11 +74,11 @@ export const createChannel = createAsyncThunk('channel/new-channel', async (data
 
  })
 
- export const deleteChannel = createAsyncThunk('channel/delete-channel', async (channelId, thunkAPI) => {
+ export const deleteChannel = createAsyncThunk('channel/delete-channel', async (url, thunkAPI) => {
     try {
         console.log('hello');
 
-        return await channelService.deleteChannel(channelId);
+        return await channelService.deleteChannel(url);
         
     } catch (error) {
         return thunkAPI.rejectWithValue(error)
@@ -110,6 +123,33 @@ const brandSlice = createSlice({
         }
     })
 
+
+
+
+
+    .addCase(getCurrentChannel.pending,(state) => {state.isLoading = true }  )
+   
+     
+    .addCase(getCurrentChannel.fulfilled,(state, action) => {
+        state.isLoading = false ;
+        state.isError = false ;
+        state.isSuccess = true;
+        state.currentChannel = action?.payload;
+        // if (state?.isSuccess === true) {
+        //     toast.success("Contact Form Submitted Successfully")
+        // }
+    })
+
+    .addCase(getCurrentChannel.rejected,(state, action) => {
+        state.isLoading = false ;
+        state.isError = true;
+        state.isSuccess = false;
+        state.postedQuery = null;
+        state.currentChannel = {};
+        if (state?.error === true) {
+            toast.error("Some thing went wrong")
+        }
+    })
 
 
 

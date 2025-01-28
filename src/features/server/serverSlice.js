@@ -7,6 +7,7 @@ import serverService from './serverService';
 const initialState = { 
     servers: [],
     currentServer: {},
+    currentServerMember: {},
     newServer: {},
     isError: false,
     isLoading: false,
@@ -50,6 +51,18 @@ export const getCurrentServer = createAsyncThunk('servers/:serverId', async (dat
         console.log('hello');
 
         return await serverService.getCurrentServer(data);
+        
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error)
+    }
+
+ })
+
+ export const getCurrentServerMember = createAsyncThunk('servers/:serverId', async (serverId, thunkAPI) => {
+    try {
+        console.log('hello');
+
+        return await serverService.getCurrentServerMember(serverId);
         
     } catch (error) {
         return thunkAPI.rejectWithValue(error)

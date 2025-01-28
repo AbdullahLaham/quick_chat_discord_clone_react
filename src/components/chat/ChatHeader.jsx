@@ -16,7 +16,7 @@ import ChatVideoButton from './ChatVideoButton'
 
 // }
 
-const ChatHeader = ({serverId, name, imageUrl, type, profile, servers, server}) => {
+const ChatHeader = ({serverId, name, imageUrl, userName='', type, profile, servers, server}) => {
 
   return (
     <div className='text-md font-semibold px-3 flex items-center h-12 border-neutral-200 dark:border-neutral-800 border-b-2'>
@@ -26,7 +26,7 @@ const ChatHeader = ({serverId, name, imageUrl, type, profile, servers, server}) 
             <Hash className='w-5 h-5 text-zinc-700 dark:text-zinc-400 mr-2' />
         )}
         {type == "conversation" && (
-            <UserAvatar src={imageUrl} className='w-10 h-10 mr-2 ' />
+            <UserAvatar src={imageUrl} name={userName}  className='w-10 h-10 mr-2 ' />
         )}
 
         <p className='font-semibold text-md text-black dark:text-white'>{name}</p>

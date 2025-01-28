@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, createAction } from '@reduxjs/toolkit';
-import chatService from './chatService';
+import messageService from './messageService';
 import Cookies from 'cookies-js';
 import { toast } from 'sonner';
 
@@ -8,6 +8,7 @@ const initialState = {
 
     messages: [],
     currentMessage: {},
+    updatedMessage: {},
     currentChat: {},
     chats: [],
     // chats: [],
@@ -23,7 +24,7 @@ export const getMessages = createAsyncThunk('chat/get-messages', async (data, th
     try {
         console.log('hello');
 
-        return await chatService.getMessages(data);
+        return await messageService.getMessages(data);
         
     } catch (error) {
         return thunkAPI.rejectWithValue(error)
@@ -38,7 +39,19 @@ export const addMessage = createAsyncThunk('chat/add-message', async (data, thun
     try {
         console.log('hello');
 
-        return await chatService.addMessage(data);
+        return await messageService.addMessage(data);
+        
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error)
+    }
+
+ })
+
+ export const updateMessage = createAsyncThunk('chat/update-message', async (data, thunkAPI) => {
+    try {
+        console.log('hello');
+
+        return await messageService.updateMessage(data);
         
     } catch (error) {
         return thunkAPI.rejectWithValue(error)
@@ -52,7 +65,7 @@ export const addMessage = createAsyncThunk('chat/add-message', async (data, thun
     try {
         console.log('hello');
 
-        return await chatService.createChat(data);
+        return await messageService.createChat(data);
         
     } catch (error) {
         return thunkAPI.rejectWithValue(error)
@@ -64,7 +77,7 @@ export const addMessage = createAsyncThunk('chat/add-message', async (data, thun
     try {
         console.log('hello');
 
-        return await chatService.getUserChats(userId);
+        return await messageService.getUserChats(userId);
         
     } catch (error) {
         return thunkAPI.rejectWithValue(error)
@@ -76,7 +89,7 @@ export const addMessage = createAsyncThunk('chat/add-message', async (data, thun
 
  
  export const resetState = createAction('Reset-all');
-const brandSlice = createSlice({
+const messageSlice = createSlice({
   name: 'chat',
   initialState,
   reducers: {
@@ -129,6 +142,32 @@ const brandSlice = createSlice({
     })
 
     .addCase(addMessage.rejected,(state, action) => {
+        state.isLoading = false ;
+        state.isError = true;
+        state.isSuccess = false;
+        state.currentMessage = null;
+        state.message = action.error;
+        if (state?.error === true) {
+            toast.error("Some thing went wrong")
+        }
+    })
+
+
+
+    .addCase(updateMessage.pending,(state) => {state.isLoading = true }  )
+   
+     
+    .addCase(updateMessage.fulfilled,(state, action) => {
+        state.isLoading = false ;
+        state.isError = false ;
+        state.isSuccess = true;
+        state.updatedMessage = action?.payload;
+        // if (state?.isSuccess === true) {
+        //     toast.success("Contact Form Submitted Successfully")
+        // }
+    })
+
+    .addCase(updateMessage.rejected,(state, action) => {
         state.isLoading = false ;
         state.isError = true;
         state.isSuccess = false;
@@ -202,6 +241,7 @@ const brandSlice = createSlice({
     .addCase(resetState, () => initialState)
     },
 });
-export default brandSlice.reducer;
+
+export default messageSlice.reducer;
 
 

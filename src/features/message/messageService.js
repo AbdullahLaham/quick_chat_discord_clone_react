@@ -17,7 +17,7 @@ const getMessages = async (chatId) => {
 
 
 const addMessage = async (data) => {
-    const res = await API.post(`/messages/`, data);
+    const res = await API.post(`${data?.url}`, data?.data);
     console.log(res);
 
     if (res.data) {
@@ -28,8 +28,8 @@ const addMessage = async (data) => {
 }
 
 
-const createChat = async (data) => {
-    const res = await API.post(`/chat`, data);
+const updateMessage = async (data) => {
+    const res = await API.put(`/messages/${data?.url}`, data?.data);
     console.log(res);
 
     if (res.data) {
@@ -38,6 +38,29 @@ const createChat = async (data) => {
 
     return res.data;
 }
+
+
+const deleteMessage = async (data) => {
+    const res = await API.delete(`${data?.url}`);
+    console.log(res);
+
+    if (res.data) {
+        return res.data;
+    }
+
+    return res.data;
+}
+
+// const createChat = async (data) => {
+//     const res = await API.post(`/chat`, data);
+//     console.log(res);
+
+//     if (res.data) {
+//         return res.data;
+//     }
+
+//     return res.data;
+// }
 
 
 
@@ -56,14 +79,15 @@ const getUserChats = async (userId) => {
 
 
 
-const contactService = {
+const messageService = {
     addMessage,
     getMessages,
-    createChat,
-    getUserChats
+    getUserChats,
+    updateMessage,
+    deleteMessage,
 
 }
 
 
-export default contactService;
+export default messageService;
 

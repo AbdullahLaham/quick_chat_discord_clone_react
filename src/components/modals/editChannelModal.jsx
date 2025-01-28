@@ -34,6 +34,8 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useModal } from '../../hooks/useModalStore'
 // import { ChannelType } from '@prisma/client'
 import {toast} from 'sonner';
+import { useDispatch } from 'react-redux';
+import { updateChannel } from '../../features/channel/channelSlice';
 const  ChannelType =  {
     TEXT: "TEXT",
     AUDIO: "AUDIO",
@@ -41,6 +43,7 @@ const  ChannelType =  {
   }
 const EditChannelModal = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const {isOpen, onClose, type, data} = useModal();
     
@@ -74,17 +77,19 @@ const EditChannelModal = () => {
     const onSubmit = async (values) => {
         try {
             const url = qs.stringifyUrl({
-                url: `/api/channels/${channel?.id}`,
+                url: `channels/${channel?._id}`,
                 query: {
-                    serverId: server?.id,
+                    serverId: server?._id,
                 }
             })
-            await axios.patch(url, values);
+            dispatch(updateChannel({url, data: form?.getValues()}));
+            // await axios.patch(url, values);
+
             form.reset();
             toast.success("Channel updated Successfully")
-            navigate(0);
+            // navigate(0);
             onClose();
-            window.location.reload();
+            // window.location.reload();
 
         } catch(error) {
             console.log(error);

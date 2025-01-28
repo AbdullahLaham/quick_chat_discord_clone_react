@@ -1,16 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from '../features/auth/authSlice';
-import chatReducer from '../features/chat/chatSlice';
+import messageReducer from '../features/message/messageSlice';
 import serverReducer from '../features/server/serverSlice';
 import uploadReducer from '../features/upload/uploadSlice';
+import channelReducer from '../features/channel/channelSlice';
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    chat: chatReducer,
+    message: messageReducer,
     uploads: uploadReducer,
     server: serverReducer,
-    // message: messageReducer,
+    channel: channelReducer,
   },
 });
 

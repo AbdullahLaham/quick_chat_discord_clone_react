@@ -12,21 +12,23 @@ import {
 
 from '@livekit/components-react';
 import "@livekit/components-styles";
-import { Channel } from '@prisma/client';
-import { useUser } from '@clerk/nextjs';
+// import { Channel } from '@prisma/client';
+// import { useUser } from '@clerk/nextjs';
 import { Loader2 } from 'lucide-react';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 // interface MediaRoomProps {
 //     chatId: string,
 //     video: boolean,
 //     audio: boolean
 // }
 const MediaRoom = ({chatId, video, audio}) => {
-    const {user} = useUser();
+    const {currentUser: user} = useSelector(state => state?.auth);
+    
     const [token, setToken] = useState("");
     useEffect(() => {
-        if (!user?.firstName || !user?.lastName ) return;
-        const name = `${user?.firstName} ${user?.lastName}`;
+        if (!user?.name) return;
+        const name = `${user?.name}`;
         (async () => {
             try {
               const resp = await fetch(`/api/livekit?room=${chatId}&username=${name}`);
@@ -65,6 +67,7 @@ const MediaRoom = ({chatId, video, audio}) => {
       {(audio || video) && <RoomAudioRenderer />}
       {/* Controls for the user to start/stop audio, video, and screen 
       share tracks and to leave the room. */}
+
     </LiveKitRoom>
   )
 }

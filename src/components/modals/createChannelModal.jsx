@@ -91,14 +91,15 @@ const CreateChannelModal = () => {
             dispatch(createChannel({...submitData?.data, url}))
 
             // await axios.post(url, values);
+
             form.reset();
             toast.success("Channel created Successfully");
-            // navigate(0);
+            navigate(0);
             onClose();
 
         } catch(error) {
             console.log(error);
-            toast.error('something went wrong')
+            toast.error('something went wrong');
         }
     }
 

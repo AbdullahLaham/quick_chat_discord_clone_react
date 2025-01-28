@@ -30,32 +30,37 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useModal } from '../../hooks/useModalStore'
 import {toast} from 'sonner'
 import qs from 'query-string'
+import { useDispatch } from 'react-redux'
+import { deleteChannel } from '../../features/channel/channelSlice'
 
 
 const DeleteChannelModal = () => {
     const navigate = useNavigate();
     const params = useParams();
+    const dispatch = useDispatch();
+
     const {onOpen, isOpen, onClose, type, data} = useModal();
     const {server, channel} = data;
     const [isLoading, setIsLoading] = useState(false);
     const isModalOpen = isOpen && type == "deleteChannel";
    
-    const deleteChannel = async () => {
+    const removeChannel = async () => {
 
         setIsLoading(true);
 
         try {
             const url = qs.stringifyUrl({
-                url: `/api/channels/${channel?.id}`,
+                url: `channels/${channel?._id}`,
                 query: {
                     serverId: params?.serverId,
                 }
             })
-            await axios.delete(url);
+            dispatch(deleteChannel(url));
+
             onClose();
             setIsLoading(false);
             toast.success("Message Deleted successfully")
-            navigate(`/servers/${params?.serverId}`);
+            // navigate(`/servers/${params?.serverId}`);
             navigate();
             
 
@@ -81,7 +86,7 @@ const DeleteChannelModal = () => {
                         <Button disabled={isLoading} onClick={() => onClose()} variant={'ghost'}>
                             Cancel
                         </Button>
-                        <Button disabled={isLoading} onClick={() => deleteChannel()} variant={'primary'}>
+                        <Button disabled={isLoading} onClick={() => removeChannel()} variant={'primary'}>
                             Delete
                         </Button>
 
