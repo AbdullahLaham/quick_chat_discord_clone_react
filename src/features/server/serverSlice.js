@@ -8,6 +8,7 @@ const initialState = {
     servers: [],
     currentServer: {},
     currentServerMember: {},
+    invitedServer: {},
     newServer: {},
     isError: false,
     isLoading: false,
@@ -28,8 +29,8 @@ export const getServers = createAsyncThunk('servers/', async (data, thunkAPI) =>
     }
 
  })
-
-
+ 
+ 
 
  
 export const createServer = createAsyncThunk('servers/new-server', async (data, thunkAPI) => {
@@ -58,11 +59,36 @@ export const getCurrentServer = createAsyncThunk('servers/:serverId', async (dat
 
  })
 
+ export const getInvitedServer = createAsyncThunk('servers/invite-server/:invite-code', async (inviteCode, thunkAPI) => {
+    try {
+        console.log('hello');
+
+        return await serverService.getInvitedServer(inviteCode);
+        
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error)
+    }
+
+ })
+
  export const getCurrentServerMember = createAsyncThunk('servers/:serverId', async (serverId, thunkAPI) => {
     try {
         console.log('hello');
 
         return await serverService.getCurrentServerMember(serverId);
+        
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error)
+    }
+
+ })
+
+
+ export const leaveServer = createAsyncThunk('servers/leave-server', async (serverId, thunkAPI) => {
+    try {
+        console.log('hello');
+
+        return await serverService.leaveServer(serverId);
         
     } catch (error) {
         return thunkAPI.rejectWithValue(error)
@@ -161,6 +187,30 @@ const brandSlice = createSlice({
         state.isError = true;
         state.isSuccess = false;
         state.chats = null;
+        state.message = action.error;
+        if (state?.error === true) {
+            toast.error("Some thing went wrong")
+        }
+    })
+
+    .addCase(getInvitedServer.pending,(state) => {state.isLoading = true }  )
+   
+     
+    .addCase(getInvitedServer.fulfilled,(state, action) => {
+        state.isLoading = false ;
+        state.isError = false ;
+        state.isSuccess = true;
+        state.invitedServer = action?.payload;
+        // if (state?.isSuccess === true) {
+        //     toast.success("Contact Form Submitted Successfully")
+        // }
+    })
+
+    .addCase(getInvitedServer.rejected,(state, action) => {
+        state.isLoading = false ;
+        state.isError = true;
+        state.isSuccess = false;
+        state.invitedServer = null;
         state.message = action.error;
         if (state?.error === true) {
             toast.error("Some thing went wrong")

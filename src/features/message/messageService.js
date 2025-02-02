@@ -40,8 +40,8 @@ const updateMessage = async (data) => {
 }
 
 
-const deleteMessage = async (data) => {
-    const res = await API.delete(`${data?.url}`);
+const deleteMessage = async (url) => {
+    const res = await API.delete(`${url}`);
     console.log(res);
 
     if (res.data) {

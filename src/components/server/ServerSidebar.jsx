@@ -31,7 +31,8 @@ const roleIconMap = {
 
 }
 
-const ServerSidebar = ({serverId, profile}) => {
+const ServerSidebar = ({serverId}) => {
+  const {currentUser: profile} = useSelector((state) => state?.auth)
 
   // server
   const {currentServer: server} = useSelector((state) => state.server);console.log('from comp', server)

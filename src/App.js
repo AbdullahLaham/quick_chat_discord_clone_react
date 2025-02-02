@@ -8,6 +8,7 @@ import ServerPage from './pages/ServerPage';
 import ServerLayout from './pages/layouts/ServerLayout';
 import MainLayout from './pages/layouts/MainLayout';
 import HomePage from './pages/HomePage';
+import InvitePage from './pages/InvitePage';
 
 function App() {
   
@@ -16,6 +17,7 @@ function App() {
       <Routes>
         <Route path='auth' element={<AuthScreen />} />
         <Route path="/" element={<MainLayout />}>
+        <Route path="invite/:inviteCode" element={<InvitePage />} />
           <Route index element={<HomePage />} />
           
           <Route path="server/:serverId" element={<ServerLayout />}>
@@ -25,6 +27,7 @@ function App() {
             <Route path="channel/:channelId" element={<Channel />} />
             {/* Conversation page */}
             <Route path="conversation/:conversationId" element={<Conversation />} />
+            
           </Route>
         </Route>
         {/* <Route path="server/:serverId/channel/:channelId" element={<Channel />} /> */}

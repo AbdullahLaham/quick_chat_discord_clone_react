@@ -59,7 +59,17 @@ export const addMessage = createAsyncThunk('chat/add-message', async (data, thun
 
  })
 
+ export const deleteMessage = createAsyncThunk('chat/delete-message', async (id, thunkAPI) => {
+    try {
+        console.log('hello');
 
+        return await messageService.deleteMessage(id);
+        
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error)
+    }
+
+ })
 
  export const createChat = createAsyncThunk('chat/create-chat', async (data, thunkAPI) => {
     try {

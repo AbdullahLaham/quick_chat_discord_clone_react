@@ -60,7 +60,7 @@ const getCurrentServerMember = async (id) => {
 }
 
 const deleteServer = async (id) => {
-    const res = await API.delete(`/servers/${id}/new-server`);
+    const res = await API.delete(`/servers/${id}/delete-server`);
     console.log(res);
 
     if (res.data) {
@@ -90,10 +90,22 @@ const inviteCodeServer = async (data) => {
 
     return res.data;
 }
+const getInvitedServer = async (inviteCode) => {
+    const res = await API.get(`/servers/invite-code/${inviteCode}`);
+    console.log(res);
+
+    if (res.data) {
+        return res.data;
+    }
+
+    return res.data;
+}
+
 
 const serverService = {
     getServers,
     getCurrentServer,
+    getInvitedServer,
     createServer,
     updateServer,
     deleteServer,

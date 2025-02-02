@@ -17,6 +17,7 @@ import { Button } from "../ui/button";
 import { Check, Copy, RefreshCw } from "lucide-react";
 import useOrigin from "../../hooks/useOrigin";
 import axios from "axios";
+import API from "../../features/MainApi";
 
 const InviteModal = () => {
     const navigate = useNavigate();
@@ -38,11 +39,11 @@ const InviteModal = () => {
     const onNew = async () => {
         try {
             setIsLoading(true);
-            const response = await axios.patch(`/api/servers/${server?.id}/invite-code`);
+            const response = await API.put(`/servers/${server?._id}/invite-code`);
             onOpen("invite", {server: response.data});
             setIsLoading(false);
         } catch (error) {
-            console.log(error)
+            console.log(error);
         } finally {
 
         }

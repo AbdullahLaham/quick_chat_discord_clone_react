@@ -85,7 +85,7 @@ const ChannelPage = ({}) => {
         <div className='flex-1'>
             {
                 channel?.type == 'TEXT' && (
-                    <ChatMessages member={member} type='channel' name={channel?.name} chatId={channel?.id} apiUrl='http://localhost:5000/messages' socketUrl='/api/socket/messages' socketQuery={{serverId: server?.id, channelId: channel?.id}} paramKey='channelId' paramValue={channel?._id} />
+                    <ChatMessages member={member} type='channel' name={channel?.name} chatId={channel?._id} apiUrl='http://localhost:5000/messages' socketUrl='http://localhost:5000/messages' socketQuery={{serverId: server?._id, channelId: channel?._id}} paramKey='channelId' paramValue={channel?._id} />
                 )
             }
             {
